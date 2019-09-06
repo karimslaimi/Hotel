@@ -6,14 +6,11 @@ using System.Web;
 
 namespace Hotel.Models
 {
-    public class User
+    public class Depenses
     {
         [Key]
         public int id { get; set; }
-        public string name { get; set; }
-        public string mail { get; set; }
-        public string password { get; set; }
-        public string type { get; set; }
-
+        public string motif { get; set; }
+        public float montant { get; set; }
     }
 }
