@@ -161,5 +161,22 @@ namespace Hotel.Controllers
         }
 
 
+        public ActionResult DeleteEmp(int id)
+        {
+
+            su.Delete(x => x.id == id);
+            return RedirectToAction("listEmp");
+        }
+
+        [HttpGet]
+        public ActionResult listEmp()
+        {
+            List<User> _users = su.GetMany(x => x.type != "director").ToList();
+            return View(_users);
+        }
+
+       
+
+
     }
 }
