@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,5 +19,6 @@ namespace Hotel.Data
         public DbSet<Depenses> Depenses { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
     }
 }

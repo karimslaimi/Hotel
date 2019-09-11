@@ -165,6 +165,7 @@ namespace Hotel.Controllers
         {
 
             su.Delete(x => x.id == id);
+            su.Commit();
             return RedirectToAction("listEmp");
         }
 
