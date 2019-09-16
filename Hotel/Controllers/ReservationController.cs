@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Model;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
@@ -55,13 +56,40 @@ namespace Hotel.Controllers
         }
         //resume
 
-        public ActionResult AddReservation(Reservation res)
+        public ActionResult AddReservation(Reservation res,string name1,string name2,string name3,string name4)
         {
+
             if (ModelState.IsValid)
             {
                 sr.Add(res);
                 sr.Commit();
                 return RedirectToAction("");
+            }
+            if(name1 != null && name1!="")
+            {
+                Client cl = new Client();
+                cl.nomC = name1;
+                cl.idr = res.id;
+            }
+            if (name2 != null && name2 != "")
+            {
+                Client cl = new Client();
+                cl.nomC = name2;
+                cl.idr = res.id;
+
+            }
+            if (name3 != null && name3 != "")
+            {
+                Client cl = new Client();
+                cl.nomC = name3;
+                cl.idr = res.id;
+
+            }
+            if (name4 != null && name4 != "")
+            {
+                Client cl = new Client();
+                cl.nomC = name4;
+                cl.idr = res.id;
             }
             return View();
             
