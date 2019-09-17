@@ -106,7 +106,12 @@ namespace Hotel.Controllers
         }
 
 
-
+        public ActionResult Delete(int id)
+        {
+            sr.Delete(x => x.id == id);
+            sr.Commit();
+            return RedirectToAction("Reservations");
+        }
 
 
         public ActionResult Employee(DateTime? d1, DateTime? d2, string kw, int? num)

@@ -2,13 +2,12 @@
 
 @{
     Layout = "~/Views/Shared/template.cshtml";
-        }
+}
 
-<h2>allDep</h2>
+<h2 class="align-center">Dépenses</h2>
+<a href="@Url.Action("addDep","Dep")" class="btn btn-primary pull-right ">Ajouter une dépense</a>
+<br /><br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -20,20 +19,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.motif)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.montant)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.motif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.montant)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>

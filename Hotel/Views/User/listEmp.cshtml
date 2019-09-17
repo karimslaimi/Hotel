@@ -5,11 +5,9 @@
     Layout = "~/Views/Shared/template.cshtml";
 }
 
-<h2>listEmp</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2 class="align-center">Tous les employés</h2>
+<a href="@Url.Action("addEmp","User")" class="btn btn-primary pull-right ">Nouveau employé</a>
+<br /><br />
 <table class="table table-striped table-bordered table-condensed">
     <tr>
         <th>
@@ -18,30 +16,31 @@
         <th>
             @Html.DisplayNameFor(model => model.mail)
         </th>
-       
+
         <th>
             @Html.DisplayNameFor(model => model.type)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mail)
-        </td>
-      
-        <td>
-            @Html.DisplayFor(modelItem => item.type)
-        </td>
-        <td>
-          
-            @Html.ActionLink("Supprimer", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mail)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>
