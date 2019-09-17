@@ -30,16 +30,16 @@ namespace Hotel.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string email, string pw)
+        public ActionResult Login(User _uss)
         {
 
-            User us = new User();
+                User us = new User();
             SHA256 hash = new SHA256CryptoServiceProvider();
-            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(pw);
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(_uss.password);
             Byte[] encodedBytes = hash.ComputeHash(originalBytes);
-            pw = BitConverter.ToString(encodedBytes);
+            _uss.password = BitConverter.ToString(encodedBytes);
 
-            us = su.Get(x => x.mail == email && x.password == pw);
+            us = su.Get(x => x.mail == _uss.mail && x.password == _uss.password);
             if (us == null)
             {
                 ViewBag.logerr = "email ou mot de passe invalide";
@@ -48,12 +48,12 @@ namespace Hotel.Controllers
             else if(us.type=="employee")
             {
                 FormsAuthentication.SetAuthCookie(us.mail, true);
-                return RedirectToAction("", "");
+                return RedirectToAction("Emloyee", "Reservation");
 
             }else if (us.type == "director")
             {
                 FormsAuthentication.SetAuthCookie(us.mail, true);
-                return RedirectToAction("", "");
+                return RedirectToAction("Index", "Home");
             }
 
             return View();
@@ -176,6 +176,7 @@ namespace Hotel.Controllers
             return View(_users);
         }
 
+       
        
 
 

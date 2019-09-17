@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Hotel.Models.Reservation>
+
+@{
+    ViewBag.Title = "Reservations";
+    Layout = "~/Views/Shared/templateEmp.cshtml";
+}
+@using System.Globalization;
+@{
+    CultureInfo french = new CultureInfo("fr-FR"); }
+
+
+
+<h2>Reservations</h2>
+
+<p>
+    @Html.ActionLink("Ajouter une réservation", "AddReservation")
+</p>
+<table class="datatable-1 table table-bordered table-striped  display dataTable ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.chambre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.agence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Arrivee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dft)
+        </th>
+
+        <th>Client</th>
+
+
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.chambre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.agence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @{
+                    var d = item.Arrivee.ToString("dd/MM/yyyy", french);
+                }
+                @Html.DisplayFor(modelItem => d)
+            </td>
+            <td>
+                @{
+                    var d1 = item.dft.ToString("dd/MM/yyyy", french);
+                }
+                @Html.DisplayFor(modelItem => d1)
+            </td>
+            <td>
+                @{
+                    var client = item.Clients.FirstOrDefault();
+                }
+                @Html.DisplayFor(m => client.nomC)
+            </td>
+
+
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

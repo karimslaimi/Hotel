@@ -1,5 +1,5 @@
 ﻿using Hotel.Data;
-using Hotel.Models;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,15 +8,15 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.ServiceReservation
+namespace Services.ServiceClient
 {
-    public class ServiceReservation:IserviceReservation
+    public class ServiceClient:IserviceClient
     {
-        public void Add(Reservation entity)
+        public void Add(Client entity)
         {
             using (var ctx = new DatabContext())
             {
-                ctx.Reservations.Add(entity);
+                ctx.Clients.Add(entity);
                 ctx.SaveChanges();
             }
         }
@@ -29,77 +29,77 @@ namespace Services.ServiceReservation
             }
         }
 
-        public void Delete(Expression<Func<Reservation, bool>> where)
+        public void Delete(Expression<Func<Client, bool>> where)
         {
             using (var ctx = new DatabContext())
             {
-                IEnumerable<Reservation> objects = ctx.Reservations.Where(where).AsEnumerable();
-                foreach (Reservation obj in objects)
-                    ctx.Reservations.Remove(obj);
+                IEnumerable<Client> objects = ctx.Clients.Where(where).AsEnumerable();
+                foreach (Client obj in objects)
+                    ctx.Clients.Remove(obj);
                 ctx.SaveChanges();
 
             }
         }
 
-        public void Delete(Reservation entity)
+        public void Delete(Client entity)
         {
             using (var ctx = new DatabContext())
             {
 
-                ctx.Reservations.Remove(entity);
+                ctx.Clients.Remove(entity);
                 ctx.SaveChanges();
 
             }
         }
 
-        public Reservation Get(Expression<Func<Reservation, bool>> where)
+        public Client Get(Expression<Func<Client, bool>> where)
         {
             using (var ctx = new DatabContext())
             {
 
-                return ctx.Reservations.Where(where).FirstOrDefault();
+                return ctx.Clients.Where(where).FirstOrDefault();
 
 
             }
         }
 
-        public IEnumerable<Reservation> GetAll()
+        public IEnumerable<Client> GetAll()
         {
             using (var ctx = new DatabContext())
             {
 
-                return ctx.Reservations;
+                return ctx.Clients.AsEnumerable();
 
             }
         }
 
-        public Reservation GetById(long id)
+        public Client GetById(long id)
         {
             using (var ctx = new DatabContext())
             {
 
-                return ctx.Reservations.Find(id);
+                return ctx.Clients.Find(id);
 
             }
         }
 
-        public Reservation GetById(string id)
+        public Client GetById(string id)
         {
             using (var ctx = new DatabContext())
             {
 
-                return ctx.Reservations.Find(id);
+                return ctx.Clients.Find(id);
 
             }
         }
 
-        public IEnumerable<Reservation> GetMany(Expression<Func<Reservation, bool>> where = null, Expression<Func<Reservation, bool>> orderBy = null)
+        public IEnumerable<Client> GetMany(Expression<Func<Client, bool>> where = null, Expression<Func<Client, bool>> orderBy = null)
         {
-            IQueryable<Reservation> Query;
+            IQueryable<Client> Query;
             using (var ctx = new DatabContext())
             {
 
-                Query = ctx.Reservations.Include(x=>x.Clients);
+                Query = ctx.Clients;
                 if (where != null)
                 {
                     Query = Query.Where(where);
@@ -114,18 +114,16 @@ namespace Services.ServiceReservation
         }
 
 
-        public void Update(Reservation entity)
+        public void Update(Client entity)
         {
             using (var ctx = new DatabContext())
             {
 
-                ctx.Reservations.Attach(entity);
+                ctx.Clients.Attach(entity);
                 ctx.Entry(entity).State = EntityState.Modified;
                 ctx.SaveChanges();
 
             }
         }
-
     }
 }
-

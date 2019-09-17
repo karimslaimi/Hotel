@@ -320,10 +320,17 @@
     <Content Include="Views\Dep\addDep.cshtml" />
     <Content Include="Views\Dep\allDep.cshtml" />
     <Content Include="Views\Shared\template.cshtml" />
+    <Content Include="Views\User\AddEmp.cshtml" />
+    <Content Include="Views\User\listEmp.cshtml" />
+    <Content Include="Views\User\editProfile.cshtml" />
+    <Content Include="Views\Reservation\AddReservation.cshtml" />
+    <Content Include="Views\Reservation\Reservations.cshtml" />
+    <Content Include="Views\Reservation\Detail.cshtml" />
+    <Content Include="Views\Shared\templateEmp.cshtml" />
+    <Content Include="Views\Reservation\Reserv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Reservation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

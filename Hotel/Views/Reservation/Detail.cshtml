@@ -1,0 +1,91 @@
+﻿@model Hotel.Models.Reservation
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/template.cshtml";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.chambre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chambre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.agence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.agence)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Arrivee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Arrivee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.montant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.montant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bons)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dft)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

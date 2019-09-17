@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceClient\IserviceClient.cs" />
+    <Compile Include="ServiceClient\ServiceClient.cs" />
     <Compile Include="ServiceDepenses\IserviceDepenses.cs" />
     <Compile Include="ServiceDepenses\ServiceDepenses.cs" />
     <Compile Include="ServiceReservation\IserviceReservation.cs" />
