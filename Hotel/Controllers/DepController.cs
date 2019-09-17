@@ -32,14 +32,14 @@ namespace Hotel.Controllers
         [HttpGet]
         public ActionResult allDep()
         {
-            return View();
+            ServiceDepenses sd = new ServiceDepenses();
+            List<Depenses> ld = sd.GetMany().ToList();
+            return View(ld);
         }
         [HttpPost]
         public ActionResult allDep(Depenses dep)
         {
-            ServiceDepenses sd = new ServiceDepenses();
-            List<Depenses> ld=sd.GetAll().ToList();
-            return View(ld);
+            return View();
         }
     }
 }

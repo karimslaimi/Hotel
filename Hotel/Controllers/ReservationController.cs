@@ -99,7 +99,7 @@ namespace Hotel.Controllers
             
         }
 
-      public ActionResult Detail(int id)
+      public ActionResult Details(int id)
         {
             Reservation rs = sr.GetById(id);
             return View(rs);

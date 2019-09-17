@@ -16,7 +16,7 @@
     {
         Text = "Double",
         Value = "Double",
-       
+
     });
     listItems.Add(new SelectListItem
     {
@@ -38,124 +38,125 @@
     }
 </style>
 
-@using (Html.BeginForm("AddReservation", "Reservation",FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("AddReservation", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Ajouter une réservation</h4>
-    <div class="sub-entry">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="control-group">
-            <label class="control-label ">Chambre numéro </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.chambre, "", new { @class = "text-danger" })
+        <h4>Ajouter une réservation</h4>
+        <hr />
+        <div class="sub-entry">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="control-group">
+                <label class="control-label ">Chambre numéro </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.chambre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label ">Type chambre </label>
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.type, listItems, "Sélectionner", new { @class = "span8" })
+                    @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label ">Montant</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Numéro de réçu</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.bons, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.bons, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Date d'arrivée</label>
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Arrivee, new { @type = "date", @class = "span8 datepicker" })
+                    @Html.ValidationMessageFor(model => model.Arrivee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Dft</label>
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.dft, new { @type = "date", @class = "span8 datepicker" })
+                    @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
-
-        <div class="control-group">
-            <label class="control-label ">Type chambre </label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.type, listItems, "Sélectionner", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="sub-entry">
 
 
-        <div class="control-group">
-            <label class="control-label ">Montant</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Numéro de réçu</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.bons, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.bons, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Date d'arrivée</label>
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Arrivee, new { @type = "date", @class = "form-control datepicker" })
-                @Html.ValidationMessageFor(model => model.Arrivee, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Dft</label>
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.dft, new { @type = "date", @class = "form-control datepicker" })
-                @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="sub-entry">
-
-
-        <div class="control-group">
-            <label class="control-label ">Agence </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
-            </div>
-        </div>
-     
-
-        <div class="control-group">
-            <label class="control-label ">Nationnalité</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.nat, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Nombre de personne</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Nom Client</label>
-            <div class="col-md-10">
-                <input name="name1" type="text" class="form-control" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label ">Nom Client 2</label>
-            <div class="col-md-10">
-                <input name="name2" type="text" class="form-control" /> <span class="help-inline">S'il existe</span>
+            <div class="control-group">
+                <label class="control-label ">Agence </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
+                </div>
             </div>
 
-        </div>
 
-        <div class="control-group">
-            <label class="control-label ">Nom Client 3</label>
-            <div class="col-md-10">
-                <input name="name1" type="text" class="form-control" /><span class="help-inline">S'il existe</span>
+            <div class="control-group">
+                <label class="control-label ">Nationnalité</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.nat, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.nat, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="control-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Ajouter</button>
+            <div class="control-group">
+                <label class="control-label ">Nombre de personne</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "span8" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Nom Client</label>
+                <div class="controls">
+                    <input name="name1" type="text" class="span8" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Nom Client 2</label>
+                <div class="controls">
+                    <input name="name2" type="text" class="span8" /> <span class="help-inline">S'il existe</span>
+                </div>
+
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Nom Client 3</label>
+                <div class="controls">
+                    <input name="name1" type="text" class="span8" /><span class="help-inline">S'il existe</span>
+                </div>
+            </div>
+            <br /><br />
         </div>
-    </div>
-</div>
+
+   
+        <center>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button href="@Url.Action("Reservations","Reservation")" class="btn btn-warning">Annuler</button>
+
+        </center>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+

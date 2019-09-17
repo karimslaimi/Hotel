@@ -219,7 +219,6 @@
     <Content Include="Content\code\charts.html" />
     <Content Include="Content\code\css\theme.css" />
     <Content Include="Content\code\form.html" />
-    <Content Include="Content\code\images\bg.png" />
     <Content Include="Content\code\images\icons\css\font-awesome.css" />
     <Content Include="Content\code\images\img.jpg" />
     <Content Include="Content\code\images\jquery-ui\picker.png" />

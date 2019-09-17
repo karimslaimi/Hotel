@@ -13,7 +13,7 @@ namespace Hotel.Controllers
         IserviceReservation sr = new ServiceReservation();
         public ActionResult Index()
         {
-            List<Reservation> _res = sr.GetAll().ToList();
+            List<Reservation> _res = sr.GetMany().ToList();
             DateTime dt1= DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
             DateTime dt2= DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
 
