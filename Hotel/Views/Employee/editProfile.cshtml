@@ -1,0 +1,117 @@
+﻿@model Hotel.Models.User
+
+@{
+    ViewBag.Title = "editProfile";
+    Layout = "~/Views/Shared/templateEmp.cshtml";
+}
+
+
+<div class="col-lg-4 col-md-4 mb-5 ml-5 mr-5 mt-5 S-inscrire">
+
+
+    <h4 class="rubrique-title">Modifier Votre Profile</h4>
+
+    @using (Html.BeginForm("editProfile", "User", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+
+        if (ViewBag.error != null)
+        {
+            <div class="alert alert-error">@ViewBag.error</div>
+        }
+        if (ViewBag.success != null)
+        {
+            <div class="alert alert-success">@ViewBag.success</div>
+        }
+
+
+        @Html.TextBoxFor(model => model.id, new { style = "display: none;" })
+        <div class="control-group">
+            <label class="control-label ">Nom</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label ">Email</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label ">Mot de passe</label>
+            <div class="controls">
+                @Html.PasswordFor(model => model.password, new { @class = "span8" })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Comfirmé mot de passe</label>
+            <div class="controls">
+                <input type="password" name="confirmpassword" class="span8" />
+            </div>
+        </div>
+        <br /><br />
+
+        <center>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <button href="@Url.Action("Index","Home")" class="btn btn-warning">Annuler</button>
+
+        </center>}
+</div><div class="col-lg-4 col-md-4 mb-5 ml-5 mr-5 mt-5 S-inscrire">
+
+
+    <h4 class="rubrique-title">Modifier Votre Profile</h4>
+
+    @using (Html.BeginForm("editProfile", "User", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+        @Html.TextBoxFor(model => model.id, new { style = "display: none;" })
+        <div class="control-group">
+            <label class="control-label ">Nom</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label ">Email</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label ">Mot de passe</label>
+            <div class="controls">
+                @Html.PasswordFor(model => model.password, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Comfirmé mot de passe</label>
+            <div class="controls">
+                <input type="text" name="confirmpassword" class="span8" />
+            </div>
+        </div>
+        <br /><br />
+
+        <center>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <button href="@Url.Action("Index","Home")" class="btn btn-warning">Annuler</button>
+
+        </center>}
+</div>

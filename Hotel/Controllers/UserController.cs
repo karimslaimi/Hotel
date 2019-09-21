@@ -48,7 +48,7 @@ namespace Hotel.Controllers
             else if(us.type=="employee")
             {
                 FormsAuthentication.SetAuthCookie(us.mail, true);
-                return RedirectToAction("Emloyee", "Reservation");
+                return RedirectToAction("Reservations", "Employee");
 
             }else if (us.type == "director")
             {
@@ -90,7 +90,7 @@ namespace Hotel.Controllers
             //we will get the admin from the data base to attach it
             User _user = su.GetById(us.id);
 
-            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail))
+            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail) && ModelState.IsValid)
             {
                 //check if the email is not null , empty or white space and the change it
                 _user.mail = us.mail;
@@ -108,20 +108,19 @@ namespace Hotel.Controllers
                 _user.password = us.password;
 
             }
-            else if (us.password != "" && us.password != confirmpassword)
+            else if (!string.IsNullOrWhiteSpace(us.password) && us.password != confirmpassword)
             {
                 //if the two password doesn't math return the same view with error msg
-                ViewBag.error = "password doesn't math";
+                ViewBag.error = "les mots de passe ne correspondent pas";
                 return View();
             }
             //now update and commit
 
 
             su.Update(_user);
-            su
-.Commit();
+            su.Commit();
 
-            ViewBag.success = "Profile updated";
+            ViewBag.success = "Votre Profile est mis à jour";
             return View();
 
 
@@ -153,7 +152,7 @@ namespace Hotel.Controllers
                 us.password = BitConverter.ToString(encodedBytes);
                 su.Add(us);
                 su.Commit();
-                return RedirectToAction("ListAdmin");
+                return RedirectToAction("listEmp");
             }
 
 

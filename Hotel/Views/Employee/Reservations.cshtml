@@ -4,17 +4,20 @@
     ViewBag.Title = "Reservations";
     Layout = "~/Views/Shared/templateEmp.cshtml";
 }
+
 @using System.Globalization;
 @{
     CultureInfo french = new CultureInfo("fr-FR"); }
 
 
 
-<h2>Reservations</h2>
+<h2 class="align-center">Réservations</h2>
 
-<p>
-    @Html.ActionLink("Ajouter une réservation", "AddReservation")
-</p>
+<a href="@Url.Action("AddReservation","Reservation")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
+
+<br />
+<br />
+
 <table class="datatable-1 table table-bordered table-striped  display dataTable ">
     <tr>
         <th>

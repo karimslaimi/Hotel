@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Services.ServiceDepence;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Hotel.Controllers
 {
+    [CustomAuthorizeAttribute(Roles ="director")]
     public class DepController : Controller
     {
         // GET: Dep

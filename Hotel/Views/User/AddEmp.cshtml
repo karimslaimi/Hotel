@@ -7,65 +7,63 @@
 
 
 
-<div class="container" style="background-color:white;padding:100px;min-height:inherit;">
-    @using (Html.BeginForm("AddEmp", "User", FormMethod.Post, new { @class = "form-horizontal" }))
-    {
-        @Html.AntiForgeryToken()
+    <div class="container" style="background-color:white;padding:100px;min-height:inherit;">
+        @using (Html.BeginForm("AddEmp", "User", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+        {
+            @Html.AntiForgeryToken()
 
-        <div class=" ">
-            <h2>Ajouter un employé</h2>
+        <div class="col-lg-4 col-md-4 mb-5 ml-5 mr-5 mt-5 S-inscrire ">
+            <h4 class="rubrique-title">Ajouter un profile</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-            <div class="form-group row">
-              <label class="control-label col-md-2">Nom</label>
-                <div class="col-xs-9">
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextBoxFor(model => model.id, new { style = "display: none;" })
+            <div class="control-group">
+                <label class="control-label ">Nom</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "span8" } })
                     @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group row">
-                <label class="control-label col-md-2">Mail</label>
-                <div class="col-xs-9">
-                    @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="control-group">
+                <label class="control-label ">Email</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "span8" } })
                     @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group row">
-                <label class="control-label col-md-2">Mot de passe</label>
-                <div class="col-xs-9">
-                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="control-group">
+                <label class="control-label ">Mot de passe</label>
+                <div class="controls">
+                    @Html.PasswordFor(model => model.password, new { @class = "span8" })
                     @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="control-label col-md-2 ">Comfirmer Mot de passe</label>
-                <div class="col-xs-9">
-                    <input class="form-control" name="pass" type="text" />
+            <div class="control-group">
+                <label class="control-label ">Comfirmé mot de passe</label>
+                <div class="controls">
+                    <input type="password" name="confirmpassword" class="span8" />
                 </div>
             </div>
 
 
 
-            <div class="form-group">
-                <div class="offset-xs-3 col-xs-9">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </div>
+            <br /><br />
+
+            <center>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <a href="@Url.Action("listEmp", "User")" class="btn btn-warning">Annuler</a>
+
+            </center>
 
         </div>
 
-    }
- 
-    <div>
-        @Html.ActionLink("Back to List", "listEmp", "User", new { @class = "btn  btn-outline-secondary" })
-    </div>
+        }
 
-</div>
+
+
+    </div>
 
 
 

@@ -62,6 +62,14 @@
     <Compile Include="Migrations\201909211333414_mjadded.Designer.cs">
       <DependentUpon>201909211333414_mjadded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909211709386_data annotation.cs" />
+    <Compile Include="Migrations\201909211709386_data annotation.Designer.cs">
+      <DependentUpon>201909211709386_data annotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909211713021_data annot.cs" />
+    <Compile Include="Migrations\201909211713021_data annot.Designer.cs">
+      <DependentUpon>201909211713021_data annot.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +92,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909211333414_mjadded.resx">
       <DependentUpon>201909211333414_mjadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909211709386_data annotation.resx">
+      <DependentUpon>201909211709386_data annotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909211713021_data annot.resx">
+      <DependentUpon>201909211713021_data annot.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

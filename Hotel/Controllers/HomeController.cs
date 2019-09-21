@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Hotel.Controllers
     public class HomeController : Controller
     {
         IserviceReservation sr = new ServiceReservation();
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Index()
         {
             List<Reservation> _res = sr.GetMany().ToList();
@@ -38,5 +40,13 @@ namespace Hotel.Controllers
 
             return View();
         }
+
+
+
+        public ActionResult Unauthorized()
+        {
+            return View();
+        }
+
     }
 }

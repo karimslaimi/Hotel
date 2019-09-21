@@ -10,8 +10,11 @@ namespace Hotel.Models
     {
         [Key]
         public int id { get; set; }
+        [Required]
         public string motif { get; set; }
+        [Required]
         public float montant { get; set; }
+        [Required]
         public string description { get; set; }
     }
 }

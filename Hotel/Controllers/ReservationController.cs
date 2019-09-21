@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Model;
 using Services.ServiceClient;
 using Services.ServiceReservation;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Hotel.Controllers
 {
+    [CustomAuthorizeAttribute(Roles = "director")]
     public class ReservationController : Controller
     {
 
@@ -114,30 +116,7 @@ namespace Hotel.Controllers
         }
 
 
-        public ActionResult Employee(DateTime? d1, DateTime? d2, string kw, int? num)
-        {
-
-            List<Reservation> _reserv = sr.GetMany().ToList();
-
-            if (d1 != null)
-            {
-                _reserv = _reserv.Where(x => x.Arrivee >= d1).ToList();
-            }
-            if (d2 != null)
-            {
-                _reserv = _reserv.Where(x => x.dft <= d2).ToList();
-            }
-            if (num != null)
-            {
-                _reserv = _reserv.Where(x => x.chambre == num).ToList();
-            }
-            if (kw != null && kw != "")
-            {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw).ToList();
-            }
-
-            return View("Reserv",_reserv);
-        }
+ 
 
 
     }
