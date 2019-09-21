@@ -78,7 +78,7 @@ namespace Hotel.Controllers
         {
             //this is the get method
             //it will put the current connected user in the admin object
-            User us= su.Get(x => x.mail == User.Identity.Name);
+            User us= su.GetMany(x => x.mail == User.Identity.Name).Single();
             return View(us);
         }
 

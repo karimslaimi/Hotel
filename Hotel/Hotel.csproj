@@ -327,6 +327,7 @@
     <Content Include="Views\Reservation\Detail.cshtml" />
     <Content Include="Views\Shared\templateEmp.cshtml" />
     <Content Include="Views\Reservation\Reserv.cshtml" />
+    <Content Include="Views\Dep\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

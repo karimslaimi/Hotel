@@ -41,5 +41,20 @@ namespace Hotel.Controllers
         {
             return View();
         }
+        public PartialViewResult Details(int id)
+        {
+            ServiceDepenses sd = new ServiceDepenses();
+            Depenses dp = sd.GetById(id);
+
+            return PartialView(dp);
+        }
+        public ActionResult Delete(int id)
+        {
+            IserviceDepenses sd = new ServiceDepenses();
+            sd.Delete(x => x.id == id);
+            sd.Commit();
+
+            return RedirectToAction("allDep");
+        }
     }
 }

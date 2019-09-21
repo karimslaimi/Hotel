@@ -3,18 +3,21 @@
 @{
     Layout = "~/Views/Shared/template.cshtml";
 }
-
+@{
+    var idd = 1;
+}
 <h2 class="align-center">Dépenses</h2>
 <a href="@Url.Action("addDep","Dep")" class="btn btn-primary pull-right ">Ajouter une dépense</a>
 <br /><br />
 
-<table class="table">
+<table class="table table-striped table-bordered table-condensed">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.motif)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.montant)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.motif)
         </th>
         <th></th>
     </tr>
@@ -22,6 +25,7 @@
     @foreach (var item in Model)
     {
         <tr>
+
             <td>
                 @Html.DisplayFor(modelItem => item.motif)
             </td>
@@ -29,11 +33,56 @@
                 @Html.DisplayFor(modelItem => item.montant)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
+                    <i class="fa fa-history fa-fw"></i>Détailles
+                </a> |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.id })
             </td>
         </tr>
     }
 
 </table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Détailles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+               
+                @Html.Action("Details", "Dep", new { id = idd })
+                <br />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).on("click", ".open-homeEvents", function () {
+        var eventId = $(this).data('id');
+        $('#idDep').val(eventId);
+    @idd=eventId;
+    });
+
+
+
+
+</script>

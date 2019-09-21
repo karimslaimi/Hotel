@@ -12,5 +12,6 @@ namespace Hotel.Models
         public int id { get; set; }
         public string motif { get; set; }
         public float montant { get; set; }
+        public string description { get; set; }
     }
 }

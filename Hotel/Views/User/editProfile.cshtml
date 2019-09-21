@@ -9,7 +9,7 @@
 
     <h4 class="rubrique-title">Modifier Votre Profile</h4>
 
-    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+    @using (Html.BeginForm("editProfile", "User", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
     {
         @Html.AntiForgeryToken()
 
@@ -19,21 +19,39 @@
 
 
         @Html.TextBoxFor(model => model.id, new { style = "display: none;" })
-        <div class="form-group">
-            <label for="exampleInputEmail1">Nom d'utilisateur <span class="couleur-rouge">*</span></label>
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="control-group">
+            <label class="control-label ">Nom</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Adresse email <span class="couleur-rouge">*</span></label>
-            @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+        <div class="control-group">
+            <label class="control-label ">Email</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="exampleInputPassword1">Mot de passe <span class="couleur-rouge">*</span></label>
-            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+        <div class="control-group">
+            <label class="control-label ">Mot de passe</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
         </div>
 
+        <div class="control-group">
+            <label class="control-label ">Comfirmé mot de passe</label>
+            <div class="controls">
+                <input type="text" name="confirmpassword" class="span8" />
+            </div>
+        </div>
+        <br /><br />
 
-        <center><button type="submit" class="btn-valide mb-3">Modifier</button></center>
-    }
+        <center>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <button href="@Url.Action("Index","Home")" class="btn btn-warning">Annuler</button>
+
+        </center>}
 </div>
