@@ -16,12 +16,12 @@ namespace Hotel.Controllers
         public ActionResult Index()
         {
             List<Reservation> _res = sr.GetMany().ToList();
-            DateTime dt1= DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
-            DateTime dt2= DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
+            DateTime dt1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
+            DateTime dt2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
 
-            ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();
-            ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);
-            ViewBag.chambre = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.chambre).Distinct().Count();
+            ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
+            ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income
+            ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.Clients.Count()).Sum();
 
 
             return View();
@@ -48,5 +48,13 @@ namespace Hotel.Controllers
             return View();
         }
 
+
+
+
     }
+
+
+ 
+
+
 }
