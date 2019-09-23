@@ -26,11 +26,17 @@ namespace Hotel.Controllers
         [HttpPost]
         public ActionResult addDep(Depenses dep)
         {
-            ServiceDepenses sd = new ServiceDepenses();
-            sd.Add(dep);          
-
-            return View();
-        }
+            try
+            {
+                ServiceDepenses sd = new ServiceDepenses();
+                sd.Add(dep);
+                return RedirectToAction("allDep");
+            }
+            catch
+            {
+                return View();
+            }
+            }
         [HttpGet]
         public ActionResult allDep()
         {
