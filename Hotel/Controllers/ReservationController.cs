@@ -119,9 +119,27 @@ namespace Hotel.Controllers
 
         public JsonResult Detailres(int id)
         {
-            ServiceReservation sd = new ServiceReservation();
-            Reservation dp = sd.GetById(id);
-            return new JsonResult { Data = dp, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            IserviceClient sc = new ServiceClient();
+            IserviceReservation sd = new ServiceReservation();
+            dynamic dp = sd.GetMany(x=>x.id==id).Select(s=>new {
+                id=s.id,
+                chambre=s.chambre,
+                agence=s.agence,
+                type=s.type,
+                Arrivee=s.Arrivee,
+                nat=s.nat,
+                nombre=s.nombre,
+                montant=s.montant,
+                bons=s.bons,
+                dft=s.dft,
+                Clients = s.Clients.Select(g => new { nomC=g.nomC})
+
+            });
+
+
+
+
+            return   Json(dp, JsonRequestBehavior.AllowGet);
 
         }
 

@@ -13,11 +13,21 @@ namespace Hotel.Controllers
     {
         IserviceReservation sr = new ServiceReservation();
         [CustomAuthorizeAttribute(Roles = "director")]
-        public ActionResult Index()
+        public ActionResult Index(DateTime? dt1,DateTime? dt2)
         {
+            
             List<Reservation> _res = sr.GetMany().ToList();
-            DateTime dt1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
-            DateTime dt2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
+            if (dt1 == null )
+            {
+                DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
+
+            }
+            else {DateTime d1 = (DateTime)dt1; }
+            if (dt2 == null)
+            {
+                DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
+            }
+            else { DateTime d2 = (DateTime)dt2; }
 
             ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
             ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income

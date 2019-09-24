@@ -144,7 +144,17 @@
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function (data) {
-                    console.log(data);
+                    console.log(data[0]);
+                    data = data[0];
+                    if (data.Clients[0] != null) {
+                        var c1 = data.Clients[0].nomC;
+                    } else { var c1 = "";}
+                     if (data.Clients[1] != null) {
+                       var c2 = data.Clients[1].nomC;
+                    }else { var c2 = "";}
+                     if (data.Clients[2] != null) {
+                       var c3 = data.Clients[2].nomC;
+                    }else { var c3 = "";}
 
                     var text = '<div class="sub-entry" >' +
 
@@ -155,63 +165,28 @@
 
                         '<div class="control-group"><label class="control-label ">Montant:</label><div class="controls">' + data.montant + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label ">Numéro de réçu:</label>< div class="controls" >' + data.bons + '</div></div>'+
-                        '<div class="control-group"><label class="control-label ">Date d\'arrivée</label><div class="controls">'+data.Arrivee+'</div></div>'+
+                        '<div class="control-group"><label class="control-label ">Numéro de réçu:</label><div class="controls">' + data.bons + '</div></div>'+
+                        '<div class="control-group"><label class="control-label ">Date d\'arrivée</label><div class="controls">'+ToJavaScriptDate(data.Arrivee)+'</div></div>'+
 
-                            '<div class="control-group"><label class="control-label ">Dft</label><div class="controls">'+data.dft+'</div></div></div >'+
+                            '<div class="control-group"><label class="control-label ">Dft</label><div class="controls">'+ToJavaScriptDate(data.dft)+'</div></div></div >'+
 
 
                       '<div class="sub-entry">'+
 
 
-                          '  <div class="control-group">'+
-                               ' <label class="control-label ">Agence </label>'+
-                              ' <div class="controls">'+data.agence+  
-       ' </div>'+
-                          '  </div>'+
+                         '<div class="control-group"><label class="control-label ">Agence </label><div class="controls">'+data.agence+'</div></div>'+
 
 
-                           ' <div class="control-group">'+
-                              '  <label class="control-label ">Nationnalité</label>'+
-                                '<div class="controls">'+
-                                    
-                                    data.nat+
-      '  </div>'+
-                          '  </div>'+
+                         '<div class="control-group"><label class="control-label ">Nationnalité</label><div class="controls">'+data.nat+'</div> </div>'+
 
-                            '<div class="control-group">'+
-                           '     <label class="control-label ">Nombre de personne</label>'+
-                                '<div class="controls">'+
-                                    data.nombre+
-                        
-    '    </div>'+
-           ' </div>'+
+                         '<div class="control-group"><label class="control-label ">Nombre de personne</label><div class="controls">'+data.nombre+'</div></div>'+
            
 
-                           ' <div class="control-group">'+
-                               ' <label class="control-label ">Nom Client</label>'+
-                                '<div class="controls">'+
-                              
-                                    data.Clients[0]+
-       ' </div>'+
-'</div>'+
+                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c1+'</div></div>'+
 
-                          '  <div class="control-group">'+
-                               ' <label class="control-label ">Nom Client</label>'+
-                             '   <div class="controls">'+
-                                  
-                                    data.Clients[1]+
-        '</div>'+
-                          '  </div>'+
+                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c2+'</div></div>'+
 
-                         '   <div class="control-group">'+
-                              '  <label class="control-label ">Nom Client</label>'+
-                              '  <div class="controls">'+
-                          
-                                    data.Clients[2]+
-          '  <br /><br />'+
-                         '       </div>'+
-                        '    </div>';
+                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c3+'<br /><br /></div></div>';
                     
                                         $('#content').html(text);
                     
@@ -221,7 +196,14 @@
                     
                     
                         });
-                    
+
+
+    function ToJavaScriptDate(value) {
+  var pattern = /Date\(([^)]+)\)/;
+  var results = pattern.exec(value);
+  var dt = new Date(parseFloat(results[1]));
+  return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+}
                     
                     
                     

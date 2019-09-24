@@ -57,11 +57,12 @@ namespace Services.ServiceReservation
             using (var ctx = new DatabContext())
             {
 
-                return ctx.Reservations.Where(where).FirstOrDefault();
+                return ctx.Reservations.Where(where).Include(h=>h.Clients).FirstOrDefault();
 
 
             }
         }
+
 
         public IEnumerable<Reservation> GetAll()
         {

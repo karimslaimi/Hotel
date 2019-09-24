@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,11 +15,11 @@ namespace Model
         [Key]
         public int idc { get; set; }
         public string nomC { get; set; }
-
+        [JsonIgnore]
         [ForeignKey("reservation")]
         public int idr { get; set; }
-       
 
+        [JsonIgnore]
         public virtual Reservation reservation {get;set;}
 
     }
