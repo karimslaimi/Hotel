@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using Microsoft.Ajax.Utilities;
 using Model;
 using Services.ServiceClient;
 using Services.ServiceReservation;
@@ -101,11 +102,11 @@ namespace Hotel.Controllers
             
         }
 
-      public ActionResult Details(int id)
-        {
-            Reservation rs = sr.GetById(id);
-            return View(rs);
-        }
+      //public JsonResult Details(int id)
+      //  {
+      //      Reservation rs = sr.GetById(id);
+      //      return JSON(new {montant=rs. }rs,JsonRequestBehavior.AllowGet);
+      //  }
 
 
         public ActionResult Delete(int id)
@@ -116,7 +117,13 @@ namespace Hotel.Controllers
         }
 
 
- 
+        public JsonResult Detailres(int id)
+        {
+            ServiceReservation sd = new ServiceReservation();
+            Reservation dp = sd.GetById(id);
+            return new JsonResult { Data = dp, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
 
 
     }

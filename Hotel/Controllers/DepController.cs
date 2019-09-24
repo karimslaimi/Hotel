@@ -64,5 +64,12 @@ namespace Hotel.Controllers
 
             return RedirectToAction("allDep");
         }
+        public JsonResult Detaildep(int id)
+        {
+            ServiceDepenses sd = new ServiceDepenses();
+            Depenses dp = sd.GetById(id);
+            return new JsonResult { Data = dp, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
     }
 }

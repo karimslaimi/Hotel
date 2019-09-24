@@ -8,7 +8,18 @@
 @{
     CultureInfo french = new CultureInfo("fr-FR"); }
 
+<style>
+    .sub-entry {
+        width: 50%;
+        float: left;
+    }
 
+    .button {
+        text-align: center;
+        padding-top: 20px;
+        clear: both;
+    }
+</style>
 
 <h2 class="align-center">Réservations</h2>
 
@@ -76,10 +87,144 @@
 
             <td>
 
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
+                <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
+                    <i class="fa fa-history fa-fw"></i>Détailles
+                </a> |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.id })
             </td>
+
         </tr>
     }
 
 </table>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Détailles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <div id="content"></div>
+                <br />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $(document).on('click', ".open-homeEvents", function () {
+            var idres = $(this).data('id');
+            console.log(idres);
+            $.ajax({
+                url: "/Reservation/Detailres/" + idres,
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function (data) {
+                    console.log(data);
+
+                    var text = '<div class="sub-entry" >' +
+
+                        ' <div class="control-group" > <label class="control-label ">Chambre numéro: </label> <div class="controls">' + data.chambre +
+                        '</div> </div> <div class="control-group">' +
+                        '<label class="control-label ">Type chambre: </label><div class="controls">' + data.type + '</div></div>' +
+
+
+                        '<div class="control-group"><label class="control-label ">Montant:</label><div class="controls">' + data.montant + '</div></div>' +
+
+                        '<div class="control-group"><label class="control-label ">Numéro de réçu:</label>< div class="controls" >' + data.bons + '</div></div>'+
+                        '<div class="control-group"><label class="control-label ">Date d\'arrivée</label><div class="controls">'+data.Arrivee+'</div></div>'+
+
+                            '<div class="control-group"><label class="control-label ">Dft</label><div class="controls">'+data.dft+'</div></div></div >'+
+
+
+                      '<div class="sub-entry">'+
+
+
+                          '  <div class="control-group">'+
+                               ' <label class="control-label ">Agence </label>'+
+                              ' <div class="controls">'+data.agence+  
+       ' </div>'+
+                          '  </div>'+
+
+
+                           ' <div class="control-group">'+
+                              '  <label class="control-label ">Nationnalité</label>'+
+                                '<div class="controls">'+
+                                    
+                                    data.nat+
+      '  </div>'+
+                          '  </div>'+
+
+                            '<div class="control-group">'+
+                           '     <label class="control-label ">Nombre de personne</label>'+
+                                '<div class="controls">'+
+                                    data.nombre+
+                        
+    '    </div>'+
+           ' </div>'+
+           
+
+                           ' <div class="control-group">'+
+                               ' <label class="control-label ">Nom Client</label>'+
+                                '<div class="controls">'+
+                              
+                                    data.Clients[0]+
+       ' </div>'+
+'</div>'+
+
+                          '  <div class="control-group">'+
+                               ' <label class="control-label ">Nom Client</label>'+
+                             '   <div class="controls">'+
+                                  
+                                    data.Clients[1]+
+        '</div>'+
+                          '  </div>'+
+
+                         '   <div class="control-group">'+
+                              '  <label class="control-label ">Nom Client</label>'+
+                              '  <div class="controls">'+
+                          
+                                    data.Clients[2]+
+          '  <br /><br />'+
+                         '       </div>'+
+                        '    </div>';
+                    
+                                        $('#content').html(text);
+                    
+                                    }
+                                });
+                            });
+                    
+                    
+                        });
+                    
+                    
+                    
+                    
+</script>
+
+
