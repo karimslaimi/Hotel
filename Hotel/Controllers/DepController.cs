@@ -17,12 +17,14 @@ namespace Hotel.Controllers
         {
             return View();
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult addDep()
         {
             
             return View();
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
         public ActionResult addDep(Depenses dep)
         {
@@ -37,6 +39,7 @@ namespace Hotel.Controllers
                 return View();
             }
             }
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult allDep()
         {
@@ -44,11 +47,13 @@ namespace Hotel.Controllers
             List<Depenses> ld = sd.GetMany().ToList();
             return View(ld);
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
         public ActionResult allDep(Depenses dep)
         {
             return View();
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         public PartialViewResult Details(int id)
         {
             ServiceDepenses sd = new ServiceDepenses();
@@ -56,6 +61,7 @@ namespace Hotel.Controllers
 
             return PartialView(dp);
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Delete(int id)
         {
             IserviceDepenses sd = new ServiceDepenses();
@@ -64,6 +70,7 @@ namespace Hotel.Controllers
 
             return RedirectToAction("allDep");
         }
+        [CustomAuthorizeAttribute(Roles = "director")]
         public JsonResult Detaildep(int id)
         {
             ServiceDepenses sd = new ServiceDepenses();

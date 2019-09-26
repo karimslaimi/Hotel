@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Model;
 using Services;
 using Services.ServiceClient;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace Hotel.Controllers
 {
+    [CustomAuthorizeAttribute(Roles = "employee")]
     public class EmployeeController : Controller
     {
         IserviceReservation sr = new ServiceReservation();
@@ -23,8 +25,6 @@ namespace Hotel.Controllers
         {
             return View();
         }
-
-
 
 
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
@@ -45,7 +45,7 @@ namespace Hotel.Controllers
             }
             if (kw != null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw).ToList();
+                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw || x.bons == kw || rech(x.Clients, kw)).ToList();
             }
 
             return View(_reserv);
@@ -124,7 +124,7 @@ namespace Hotel.Controllers
             return View(us);
         }
 
-        //[CustomAuthorizeAttribute(Roles = "Admin")]
+       
         [HttpPost]
         public ActionResult editProfile(User us, string confirmpassword)
         {
@@ -132,7 +132,7 @@ namespace Hotel.Controllers
             //we will get the admin from the data base to attach it
             User _user = su.GetById(us.id);
 
-            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail))
+            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail) && ModelState.IsValid)
             {
                 //check if the email is not null , empty or white space and the change it
                 _user.mail = us.mail;
@@ -150,10 +150,10 @@ namespace Hotel.Controllers
                 _user.password = us.password;
 
             }
-            else if (us.password != "" && us.password != confirmpassword)
+            else if (!string.IsNullOrWhiteSpace(us.password) && us.password != confirmpassword)
             {
                 //if the two password doesn't math return the same view with error msg
-                ViewBag.error = "le mot de passe ne correspond pas";
+                ViewBag.error = "les mots de passe ne correspondent pas";
                 return View();
             }
             //now update and commit
@@ -162,12 +162,54 @@ namespace Hotel.Controllers
             su.Update(_user);
             su.Commit();
 
-            ViewBag.success = "Votre Profile a été mis à jour";
+            ViewBag.success = "Votre Profile est mis à jour";
             return View();
 
 
 
         }
+        public JsonResult Detailres(int id)
+        {
+            IserviceClient sc = new ServiceClient();
+            IserviceReservation sd = new ServiceReservation();
+            dynamic dp = sd.GetMany(x => x.id == id).Select(s => new {
+                id = s.id,
+                chambre = s.chambre,
+                agence = s.agence,
+                type = s.type,
+                Arrivee = s.Arrivee,
+                nat = s.nat,
+                nombre = s.nombre,
+                montant = s.montant,
+                bons = s.bons,
+                dft = s.dft,
+                Clients = s.Clients.Select(g => new { nomC = g.nomC })
+
+            });
+
+
+
+
+            return Json(dp, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+        private bool rech(ICollection<Client> cl, string kw)
+        {
+            bool flag = false;
+
+            foreach (Client x in cl)
+            {
+                if (x.nomC == kw) { flag = true; }
+            }
+
+
+            return flag;
+        }
+
+
 
     }
 }
