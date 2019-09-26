@@ -8,7 +8,7 @@
 
 <div class="btn-box-row row-fluid">
     <a href="#" class="btn-box big span4">
-        <i class=" icon-random"></i><b>@ViewBag.reservsem</b>
+        <i class=" icon-home"></i><b>@ViewBag.reservsem</b>
         <p class="text-muted">
             Chambres réservées
         </p>
@@ -38,6 +38,35 @@
     <div class="span4 align-center">
 
         <button type="submit" class="btn btn-outline-success">Valider</button>
-</div>
-        }
+    </div>
+}
 
+<hr />
+  <table class="table table-striped">
+      <tr>
+          <th>
+              Motif
+          </th>
+          <th>
+              Montant
+          </th>
+          <th>
+              Description
+          </th>
+
+      </tr>
+      
+      @foreach(var item in (List<Hotel.Models.Depenses>)ViewData["lastdep"])
+      {<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.motif)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.montant)
+    </td>
+      <td>
+    @Html.DisplayFor(modelItem => item.description)
+</td>  </tr>
+
+    }
+</table>

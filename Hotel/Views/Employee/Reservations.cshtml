@@ -16,24 +16,43 @@
 <a href="@Url.Action("AddReservation","Employee")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
 
 <br />
-<br />
+<hr />
+@using (Html.BeginForm("Reservations", "Employee", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+{<div class="span3 ">
 
+        <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
+    </div>
+    <div class="span3 align-center ">
+        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls datepicker span8 " })
+
+    </div>
+    <div class="span3">
+        <b> Jusqu'a</b>
+        @Html.TextBox("d2", "", new { @type = "date", @class = "controls  datepicker span8 " })
+    </div>
+
+    <div class="span3  ">
+
+        <button type="submit" class="pull-right btn btn-success">Chercher</button>
+    </div>
+}
+<br />
 <table class="datatable-1 table table-bordered table-striped  display dataTable ">
     <tr>
         <th>
-N° Chambre
+            N° Chambre
         </th>
         <th>
-Agence 
+            Agence
         </th>
         <th>
-Type
+            Type
         </th>
         <th>
-Check-in
+            Check-in
         </th>
         <th>
-Check-out
+            Check-out
         </th>
 
         <th>Client</th>
