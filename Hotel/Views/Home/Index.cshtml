@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/template.cshtml";
 }
@@ -16,9 +18,26 @@
             Clients
         </p>
     </a><a href="#" class="btn-box big span4">
-        <i class="icon-money"></i><b>@ViewBag.money </b> 
+        <i class="icon-money"></i><b>@ViewBag.money <small>DT</small> </b>
         <p class="text-muted">
-            DT
+            revenu total
+
         </p>
     </a>
 </div>
+
+@using (Html.BeginForm("addDep", "Dep", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+{
+    <div class="span4 ">
+        <b> Date 1</b> @Html.TextBox("dt1", "", new { @type = "date", @class = "controls datepicker span8 " })<br />
+    </div>
+    <div class="span4 ">
+
+        <b> Date 2 </b> @Html.TextBox("dt2", "", new { @type = "date", @class = "controls datepicker span8 " })
+    </div>
+    <div class="span4 ">
+
+        <button type="submit" class="btn btn-outline-success">Valider</button>
+</div>
+        }
+
