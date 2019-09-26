@@ -27,8 +27,6 @@ namespace Hotel.Controllers
         }
 
 
-
-
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
         {
             List<Reservation> _reserv = sr.GetMany().ToList();
@@ -47,7 +45,7 @@ namespace Hotel.Controllers
             }
             if (kw != null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw).ToList();
+                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw || x.bons == kw || rech(x.Clients, kw)).ToList();
             }
 
             return View(_reserv);
@@ -169,6 +167,46 @@ namespace Hotel.Controllers
 
 
 
+        }
+        public JsonResult Detailres(int id)
+        {
+            IserviceClient sc = new ServiceClient();
+            IserviceReservation sd = new ServiceReservation();
+            dynamic dp = sd.GetMany(x => x.id == id).Select(s => new {
+                id = s.id,
+                chambre = s.chambre,
+                agence = s.agence,
+                type = s.type,
+                Arrivee = s.Arrivee,
+                nat = s.nat,
+                nombre = s.nombre,
+                montant = s.montant,
+                bons = s.bons,
+                dft = s.dft,
+                Clients = s.Clients.Select(g => new { nomC = g.nomC })
+
+            });
+
+
+
+
+            return Json(dp, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+        private bool rech(ICollection<Client> cl, string kw)
+        {
+            bool flag = false;
+
+            foreach (Client x in cl)
+            {
+                if (x.nomC == kw) { flag = true; }
+            }
+
+
+            return flag;
         }
 
 

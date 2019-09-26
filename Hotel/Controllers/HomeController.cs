@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using Services;
 using Services.ServiceDepence;
 using Services.ServiceReservation;
 using System;
@@ -16,6 +17,8 @@ namespace Hotel.Controllers
         [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Index(DateTime? dt1,DateTime? dt2)
         {
+            IserviceUser su = new ServiceUser();
+            if (su.Get(x=>x.mail==User.Identity.Name).type=="employee") { return RedirectToAction("Reservations", "Employee"); }
 
             List<Reservation> _res = sr.GetMany().ToList();
             
