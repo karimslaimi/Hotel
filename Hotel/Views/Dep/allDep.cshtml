@@ -14,10 +14,10 @@
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.montant)
+Motif
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.motif)
+Montant 
         </th>
         <th></th>
     </tr>
@@ -30,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.motif)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.montant)
+                @Html.DisplayFor(modelItem => item.montant)  dt
             </td>
             <td>
                 <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
@@ -89,7 +89,7 @@
                 success: function (data) {
                     console.log(data);
 
-                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant + "<br/><b>Description</b> : " + data.description;
+                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant  + "&nbsp;dt<br/><b>Description</b> : " + data.description;
 
                     $('#content').html(text);
 

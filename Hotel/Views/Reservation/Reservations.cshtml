@@ -25,24 +25,44 @@
 
 <a href="@Url.Action("AddReservation","Reservation")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
 
-<br /><br />
+<br />
+      <hr />
+@using (Html.BeginForm("Reservations", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+{<div class="span3 ">
 
+    <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
+</div>
+    <div class="span3 align-center ">
+        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls datepicker span8 " })
+
+    </div>
+    <div class="span3  ">
+        <b> Jusqu'a</b>
+        @Html.TextBox("d2", "", new { @type = "date", @class = "controls  datepicker span8 " })
+    </div>
+    
+    <div class="span3  ">
+
+        <button type="submit"  class="pull-right btn btn-success">Chercher</button>
+    </div>
+}
+<hr />
 <table class="datatable-1 table table-bordered table-striped  display dataTable ">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.chambre)
+            N° Chambre
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.agence)
+            Agence
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.type)
+            Type
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Arrivee)
+            Check-in
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dft)
+            Check-out
         </th>
 
         <th>Client</th>
@@ -148,65 +168,65 @@
                     data = data[0];
                     if (data.Clients[0] != null) {
                         var c1 = data.Clients[0].nomC;
-                    } else { var c1 = "";}
-                     if (data.Clients[1] != null) {
-                       var c2 = data.Clients[1].nomC;
-                    }else { var c2 = "";}
-                     if (data.Clients[2] != null) {
-                       var c3 = data.Clients[2].nomC;
-                    }else { var c3 = "";}
+                    } else { var c1 = ""; }
+                    if (data.Clients[1] != null) {
+                        var c2 = data.Clients[1].nomC;
+                    } else { var c2 = ""; }
+                    if (data.Clients[2] != null) {
+                        var c3 = data.Clients[2].nomC;
+                    } else { var c3 = ""; }
 
                     var text = '<div class="sub-entry" >' +
 
-                        ' <div class="control-group" > <label class="control-label ">Chambre numéro: </label> <div class="controls">' + data.chambre +
+                        ' <div class="control-group" > <label class="control-label "><b>Chambre numéro</b> </label> <div class="controls">' + data.chambre +
                         '</div> </div> <div class="control-group">' +
-                        '<label class="control-label ">Type chambre: </label><div class="controls">' + data.type + '</div></div>' +
+                        '<label class="control-label "><b>Type chambre:</b> </label><div class="controls">' + data.type + '</div></div>' +
 
 
-                        '<div class="control-group"><label class="control-label ">Montant:</label><div class="controls">' + data.montant + '</div></div>' +
+                        '<div class="control-group"><label class="control-label "><b>Montant</b></label><div class="controls">' + data.montant + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label ">Numéro de réçu:</label><div class="controls">' + data.bons + '</div></div>'+
-                        '<div class="control-group"><label class="control-label ">Date d\'arrivée</label><div class="controls">'+ToJavaScriptDate(data.Arrivee)+'</div></div>'+
+                        '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +
+                        '<div class="control-group"><label class="control-label "><b>Check-in</b></label><div class="controls">' + ToJavaScriptDate(data.Arrivee) + '</div></div>' +
 
-                            '<div class="control-group"><label class="control-label ">Dft</label><div class="controls">'+ToJavaScriptDate(data.dft)+'</div></div></div >'+
-
-
-                      '<div class="sub-entry">'+
+                        '<div class="control-group"><label class="control-label "><b>Check-out</b></label><div class="controls">' + ToJavaScriptDate(data.dft) + '</div></div></div >' +
 
 
-                         '<div class="control-group"><label class="control-label ">Agence </label><div class="controls">'+data.agence+'</div></div>'+
+                        '<div class="sub-entry">' +
 
 
-                         '<div class="control-group"><label class="control-label ">Nationnalité</label><div class="controls">'+data.nat+'</div> </div>'+
+                        '<div class="control-group"><label class="control-label "><b>Agence</b> </label><div class="controls">' + data.agence + '</div></div>' +
 
-                         '<div class="control-group"><label class="control-label ">Nombre de personne</label><div class="controls">'+data.nombre+'</div></div>'+
-           
 
-                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c1+'</div></div>'+
+                        '<div class="control-group"><label class="control-label "><b>Nationnalité</b></label><div class="controls">' + data.nat + '</div> </div>' +
 
-                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c2+'</div></div>'+
+                        '<div class="control-group"><label class="control-label "><b>Nombre de personne</b></label><div class="controls">' + data.nombre + '</div></div>' +
 
-                         '<div class="control-group"><label class="control-label ">Nom Client</label><div class="controls">'+c3+'<br /><br /></div></div>';
-                    
-                                        $('#content').html(text);
-                    
-                                    }
-                                });
-                            });
-                    
-                    
-                        });
+
+                        '<div class="control-group"><label class="control-label "><b>Nom Client 1</b></label><div class="controls">' + c1 + '</div></div>' +
+
+                        '<div class="control-group"><label class="control-label "><b>Nom Client 2</b></label><div class="controls">' + c2 + '</div></div>' +
+
+                        '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div>';
+
+                    $('#content').html(text);
+
+                }
+            });
+        });
+
+
+    });
 
 
     function ToJavaScriptDate(value) {
-  var pattern = /Date\(([^)]+)\)/;
-  var results = pattern.exec(value);
-  var dt = new Date(parseFloat(results[1]));
-  return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-}
-                    
-                    
-                    
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+
+
+
 </script>
 
 

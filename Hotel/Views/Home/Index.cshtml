@@ -26,16 +26,16 @@
     </a>
 </div>
 
-@using (Html.BeginForm("addDep", "Dep", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {
-    <div class="span4 ">
-        <b> Date 1</b> @Html.TextBox("dt1", "", new { @type = "date", @class = "controls datepicker span8 " })<br />
+    <div class="span4 align-center ">
+        <b>De </b> @Html.TextBox("dt1", "", new { @type = "date", @class = "controls datepicker span8 " })<br />
     </div>
-    <div class="span4 ">
+    <div class="span4 align-center ">
 
-        <b> Date 2 </b> @Html.TextBox("dt2", "", new { @type = "date", @class = "controls datepicker span8 " })
+        <b> Jusqu'a</b> @Html.TextBox("dt2", "", new { @type = "date", @class = "controls datepicker span8 " })
     </div>
-    <div class="span4 ">
+    <div class="span4 align-center">
 
         <button type="submit" class="btn btn-outline-success">Valider</button>
 </div>
