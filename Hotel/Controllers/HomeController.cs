@@ -21,7 +21,9 @@ namespace Hotel.Controllers
             if (su.Get(x=>x.mail==User.Identity.Name).type=="employee") { return RedirectToAction("Reservations", "Employee"); }
 
             List<Reservation> _res = sr.GetMany().ToList();
-            
+            IserviceDepenses sd = new ServiceDepenses();
+            List<Depenses> _dep = sd.GetMany().Take(5).ToList();
+            ViewData["lastdep"] = _dep;
 
             //if (dt1 == null )
             //{
