@@ -334,6 +334,7 @@
     <Content Include="Views\Employee\AddReservation.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\editProfile.cshtml" />
+    <Content Include="Views\Home\etatChambres.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

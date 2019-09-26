@@ -96,7 +96,21 @@ namespace Hotel.Controllers
             return View();
         }
 
+        public PartialViewResult etatChambres()
+        {
+            IserviceReservation sr = new ServiceReservation();
+            List<Reservation> lsr = sr.GetMany(x => x.Arrivee <= DateTime.Today.Date && DateTime.Today.Date <= x.dft).ToList();
+        
+                List<int> lstcmbr = new List<int>();
+          
+            foreach (Reservation xr in lsr)
+            {
+                lstcmbr.Add(xr.chambre);
+            }
+            ViewBag.listcmbr = lstcmbr;
+            return PartialView();
 
+        }
 
 
     }

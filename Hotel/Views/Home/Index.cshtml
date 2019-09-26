@@ -43,31 +43,38 @@
 <hr />
 <h3 class="align-center" style="color:#29b7d3">Les dernièrs dèpenses</h3>
 
-  <table class="table table-striped">
-      <tr>
-          <th>
-              <center>Motif</center>
-          </th>
-          <th >
-             <center> Montant</center>
-          </th>
-          <th >
-              <center> Description</center>
-          </th>
+<table class="table table-striped">
+    <tr>
+        <th>
+            <center>Motif</center>
+        </th>
+        <th>
+            <center> Montant</center>
+        </th>
+        <th>
+            <center> Description</center>
+        </th>
 
-      </tr>
-      
-      @foreach(var item in (List<Hotel.Models.Depenses>)ViewData["lastdep"])
-      {<tr>
-    <td >
-        <center>  @Html.DisplayFor(modelItem => item.motif)</center>
-    </td>
-    <td >
-        <center>@Html.DisplayFor(modelItem => item.montant) <small>Dt</small></center>
-    </td>
-      <td>
-          <center> @Html.DisplayFor(modelItem => item.description)</center>
-</td>  </tr>
+    </tr>
+
+    @foreach (var item in (List<Hotel.Models.Depenses>)ViewData["lastdep"])
+    {
+        <tr>
+            <td>
+                <center>  @Html.DisplayFor(modelItem => item.motif)</center>
+            </td>
+            <td>
+                <center>@Html.DisplayFor(modelItem => item.montant) <small>Dt</small></center>
+            </td>
+            <td>
+                <center> @Html.DisplayFor(modelItem => item.description)</center>
+            </td>
+        </tr>
 
     }
 </table>
+<br /><br />
+<hr />
+<h3 class="align-center" style="color:#29b7d3">Etat des chambres</h3>
+
+@Html.Action("etatChambres", "Home")
