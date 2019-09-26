@@ -40,32 +40,33 @@
         <button type="submit" class="btn btn-outline-success">Valider</button>
     </div>
 }
-
 <hr />
+<h3 class="align-center" style="color:#29b7d3">Les dernièrs dèpenses</h3>
+
   <table class="table table-striped">
       <tr>
           <th>
-              Motif
+              <center>Motif</center>
           </th>
-          <th>
-              Montant
+          <th >
+             <center> Montant</center>
           </th>
-          <th>
-              Description
+          <th >
+              <center> Description</center>
           </th>
 
       </tr>
       
       @foreach(var item in (List<Hotel.Models.Depenses>)ViewData["lastdep"])
       {<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.motif)
+    <td >
+        <center>  @Html.DisplayFor(modelItem => item.motif)</center>
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.montant)
+    <td >
+        <center>@Html.DisplayFor(modelItem => item.montant) <small>Dt</small></center>
     </td>
       <td>
-    @Html.DisplayFor(modelItem => item.description)
+          <center> @Html.DisplayFor(modelItem => item.description)</center>
 </td>  </tr>
 
     }

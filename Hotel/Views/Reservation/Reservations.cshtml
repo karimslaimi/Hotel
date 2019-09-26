@@ -160,7 +160,7 @@
             var idres = $(this).data('id');
             console.log(idres);
             $.ajax({
-                url: "/Reservation/Detailres/" + idres,
+                url: "/Employee/Detailres/" + idres,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function (data) {
