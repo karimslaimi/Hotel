@@ -27,7 +27,7 @@ namespace Hotel.Controllers
 
 
 
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw,int? num)
         {
             List<Reservation> _reserv = sr.GetMany().ToList();
@@ -46,12 +46,16 @@ namespace Hotel.Controllers
             }
             if(kw!=null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw)||x.type==kw).ToList();
+                _reserv = _reserv.Where(x => x.nat.Contains(kw)||x.type==kw || x.bons==kw || rech(x.Clients,kw)).ToList();
             }
 
             return View(_reserv);
         }
 
+
+
+
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult AddReservation()
         {
@@ -60,6 +64,10 @@ namespace Hotel.Controllers
         }
         //resume
 
+
+
+
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult AddReservation(Reservation res,string name1,string name2,string name3)
         {
 
@@ -102,13 +110,19 @@ namespace Hotel.Controllers
             
         }
 
-      //public JsonResult Details(int id)
-      //  {
-      //      Reservation rs = sr.GetById(id);
-      //      return JSON(new {montant=rs. }rs,JsonRequestBehavior.AllowGet);
-      //  }
 
 
+
+        //public JsonResult Details(int id)
+        //  {
+        //      Reservation rs = sr.GetById(id);
+        //      return JSON(new {montant=rs. }rs,JsonRequestBehavior.AllowGet);
+        //  }
+
+
+
+
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Delete(int id)
         {
             sr.Delete(x => x.id == id);
@@ -117,6 +131,9 @@ namespace Hotel.Controllers
         }
 
 
+
+
+        [CustomAuthorizeAttribute(Roles = "director")]
         public JsonResult Detailres(int id)
         {
             IserviceClient sc = new ServiceClient();
@@ -143,6 +160,21 @@ namespace Hotel.Controllers
 
         }
 
+
+
+
+        private bool rech(ICollection<Client> cl,string kw)
+        {
+            bool flag = false;
+
+            foreach(Client x in cl)
+            {
+                if (x.nomC == kw) { flag = true; }
+            }
+
+
+            return flag; 
+        }
 
     }
 }

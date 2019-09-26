@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Model;
 using Services;
 using Services.ServiceClient;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace Hotel.Controllers
 {
+    [CustomAuthorizeAttribute(Roles = "employee")]
     public class EmployeeController : Controller
     {
         IserviceReservation sr = new ServiceReservation();
@@ -124,7 +126,7 @@ namespace Hotel.Controllers
             return View(us);
         }
 
-        //[CustomAuthorizeAttribute(Roles = "Admin")]
+       
         [HttpPost]
         public ActionResult editProfile(User us, string confirmpassword)
         {
@@ -132,7 +134,7 @@ namespace Hotel.Controllers
             //we will get the admin from the data base to attach it
             User _user = su.GetById(us.id);
 
-            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail))
+            if (_user.mail != us.mail && !string.IsNullOrEmpty(us.mail) && !string.IsNullOrWhiteSpace(us.mail) && ModelState.IsValid)
             {
                 //check if the email is not null , empty or white space and the change it
                 _user.mail = us.mail;
@@ -150,10 +152,10 @@ namespace Hotel.Controllers
                 _user.password = us.password;
 
             }
-            else if (us.password != "" && us.password != confirmpassword)
+            else if (!string.IsNullOrWhiteSpace(us.password) && us.password != confirmpassword)
             {
                 //if the two password doesn't math return the same view with error msg
-                ViewBag.error = "le mot de passe ne correspond pas";
+                ViewBag.error = "les mots de passe ne correspondent pas";
                 return View();
             }
             //now update and commit
@@ -162,12 +164,14 @@ namespace Hotel.Controllers
             su.Update(_user);
             su.Commit();
 
-            ViewBag.success = "Votre Profile a été mis à jour";
+            ViewBag.success = "Votre Profile est mis à jour";
             return View();
 
 
 
         }
+
+
 
     }
 }

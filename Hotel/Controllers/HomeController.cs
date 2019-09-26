@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using Services.ServiceDepence;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,9 @@ namespace Hotel.Controllers
         [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Index(DateTime? dt1,DateTime? dt2)
         {
-            
+
             List<Reservation> _res = sr.GetMany().ToList();
+            
 
             //if (dt1 == null )
             //{
@@ -41,6 +43,7 @@ namespace Hotel.Controllers
                 ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Count();//nombre reservation
                 ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(w => w.montant);//total income
                 ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Select(l => l.Clients.Count()).Sum();
+               
             }
             if (dt1 == null && dt2 != null)//if the start date is null and the end date is not null that means since the begining until now until now 
             {

@@ -1,4 +1,5 @@
 ﻿using Hotel.Models;
+using Hotel.Security;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace Hotel.Controllers
         }
 
 
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult editProfile()
         {
@@ -82,7 +83,7 @@ namespace Hotel.Controllers
             return View(us);
         }
 
-        //[CustomAuthorizeAttribute(Roles = "Admin")]
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
         public ActionResult editProfile(User us, string confirmpassword)
         {
@@ -129,12 +130,14 @@ namespace Hotel.Controllers
 
 
 
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult AddEmp()
         {
             return View();
         }
+
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
         public ActionResult AddEmp(User us,string pass)
         {
@@ -159,7 +162,7 @@ namespace Hotel.Controllers
             
         }
 
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult DeleteEmp(int id)
         {
 
@@ -167,7 +170,7 @@ namespace Hotel.Controllers
             su.Commit();
             return RedirectToAction("listEmp");
         }
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult listEmp()
         {
