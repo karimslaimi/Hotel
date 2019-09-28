@@ -82,6 +82,7 @@ namespace Hotel.Controllers
 
             if (ModelState.IsValid)
             {
+                res.comfirmed = true;
                 sr.Add(res);
                 sr.Commit();
             
@@ -137,6 +138,19 @@ namespace Hotel.Controllers
             return RedirectToAction("Reservations");
         }
 
+
+
+
+
+        public ActionResult confirmer(int id)
+        {
+
+            Reservation rs = sr.GetById(id);
+            rs.comfirmed = false;
+            sr.Update(rs);
+            sr.Commit();
+            return RedirectToAction("reservations");
+        }
 
 
 
