@@ -67,6 +67,7 @@
 
         <th>Client</th>
 
+        <th>Etat</th>
 
 
 
@@ -75,35 +76,47 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.chambre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.agence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.type)
-            </td>
-            <td>
-                @{
-                    var d = item.Arrivee.ToString("dd/MM/yyyy", french);
-                }
-                @Html.DisplayFor(modelItem => d)
-            </td>
-            <td>
-                @{
-                    var d1 = item.dft.ToString("dd/MM/yyyy", french);
-                }
-                @Html.DisplayFor(modelItem => d1)
-            </td>
-            <td>
-                @{
-                    var client = item.Clients.FirstOrDefault();
-                }
-                @Html.DisplayFor(m => client.nomC)
-            </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.chambre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.agence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @{
+                var d = item.Arrivee.ToString("dd/MM/yyyy", french);
+            }
+            @Html.DisplayFor(modelItem => d)
+        </td>
+        <td>
+            @{
+                var d1 = item.dft.ToString("dd/MM/yyyy", french);
+            }
+            @Html.DisplayFor(modelItem => d1)
+        </td>
+        <td>
+            @{
+                var client = item.Clients.FirstOrDefault();
+            }
+            @Html.DisplayFor(m => client.nomC)
+        </td>
+        @if (item.comfirmed)
+        {
 
+            <td >
+                <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Reservation")">Confirmée</a>
+                </td>
+                }
+                else
+                {
+            <td style="color:red">
+                Non confirmée
+            </td>
+            }
 
             <td>
 
@@ -150,12 +163,22 @@
 
 
 
-
+<script>
+    $(".confirm").click(function () {
+        
+        if (confirm("Voulez vous annuler cette réservation ?")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+</script>
 <script>
 
-
+   
     $(document).ready(function () {
-
+       
         $(document).on('click', ".open-homeEvents", function () {
             var idres = $(this).data('id');
             console.log(idres);

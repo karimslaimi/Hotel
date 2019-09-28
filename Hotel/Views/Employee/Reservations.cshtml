@@ -68,7 +68,7 @@
         </th>
 
         <th>Client</th>
-
+        <th>Etat</th>
 
 
 
@@ -77,44 +77,53 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.chambre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.agence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.type)
-            </td>
-            <td>
-                @{
-                    var d = item.Arrivee.ToString("dd/MM/yyyy", french);
-                }
-                @Html.DisplayFor(modelItem => d)
-            </td>
-            <td>
-                @{
-                    var d1 = item.dft.ToString("dd/MM/yyyy", french);
-                }
-                @Html.DisplayFor(modelItem => d1)
-            </td>
-            <td>
-                @{
-                    var client = item.Clients.FirstOrDefault();
-                }
-                @Html.DisplayFor(m => client.nomC)
-            </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.chambre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.agence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @{
+                var d = item.Arrivee.ToString("dd/MM/yyyy", french);
+            }
+            @Html.DisplayFor(modelItem => d)
+        </td>
+        <td>
+            @{
+                var d1 = item.dft.ToString("dd/MM/yyyy", french);
+            }
+            @Html.DisplayFor(modelItem => d1)
+        </td>
+        <td>
+            @{
+                var client = item.Clients.FirstOrDefault();
+            }
+            @Html.DisplayFor(m => client.nomC)
+        </td>
 
+        @if (item.comfirmed)
+        {
+            <td style="color:green">Confirmé </td>
 
-            <td>
+        }
+        else
+        {
+            <td style="color:blue">Confirmé </td>
+        }
 
-                <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
-                    <i class="fa fa-history fa-fw"></i>Détailles
-                </a>|
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
-        </tr>
+        <td>
+
+            <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
+                <i class="fa fa-history fa-fw"></i>Détailles
+            </a>|
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+        </td>
+    </tr>
     }
 
 </table>
