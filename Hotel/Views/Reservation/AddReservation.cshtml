@@ -79,7 +79,37 @@
                     @Html.ValidationMessageFor(model => model.bons, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label ">Méthode de paiement</label>
 
+                <div class="controls">
+                    <label class="radio-inline span4">
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Espece
+                    </label>
+                    <label class="radio-inline span4">
+
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Chèque
+                    </label>
+                    <label class="radio-inline span4">
+
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Crédit
+                    </label>
+
+                    @Html.ValidationMessageFor(model => model.Arrivee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label ">Devise</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.devise, new { htmlAttributes = new { @class = "span8" } }) <br />
+                    @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sub-entry">
             <div class="control-group">
                 <label class="control-label ">Date d'arrivée</label>
                 <div class="controls">
@@ -95,10 +125,6 @@
                     @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-
-        <div class="sub-entry">
-
 
             <div class="control-group">
                 <label class="control-label ">Agence </label>
