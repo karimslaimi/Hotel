@@ -89,7 +89,7 @@ Montant
                 success: function (data) {
                     console.log(data);
 
-                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant  + "&nbsp;dt<br/><b>Description</b> : " + data.description;
+                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant  + "&nbsp;dt<br/><b>Description</b> : " + data.description+ "<br/><b>Méthode de paiement</b> : "+data.pmethod;
 
                     $('#content').html(text);
 

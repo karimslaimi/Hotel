@@ -1,12 +1,14 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
 using Model;
+using Newtonsoft.Json;
 using Services;
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -29,15 +31,25 @@ namespace Hotel.Controllers
 
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
         {
-            List<Reservation> _reserv = sr.GetMany().ToList();
+            List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
 
-            if (d1 != null)
+            if (d1 != null && d2 == null)
             {
                 _reserv = _reserv.Where(x => x.Arrivee >= d1).ToList();
             }
-            if (d2 != null)
+            if (d1 == null && d2 != null)
             {
-                _reserv = _reserv.Where(x => x.dft <= d2).ToList();
+                _reserv = _reserv.Where(x => x.dft >= d2).ToList();
+
+
+            }
+            if (d2 != null & d1 != null)
+            {
+                _reserv = _reserv.Where(x => (x.Arrivee <= d1 && x.dft <= d2 && x.dft > d1) || (x.Arrivee >= d1 && x.dft <= d2) || (x.Arrivee >= d1 && x.dft >= d2 && x.Arrivee < d2) || (x.Arrivee <= d1 && x.dft >= d2)).ToList();
+            }
+            if (d1 != null && d2 != null)
+            {
+
             }
             if (num != null)
             {
@@ -45,17 +57,26 @@ namespace Hotel.Controllers
             }
             if (kw != null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw) || x.type == kw || x.bons == kw || rech(x.Clients, kw)).ToList();
+                _reserv = _reserv.Where(x => x.nat.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
+                x.type.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
+                x.bons.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || rech(x.Clients, kw) ||
+                x.agence.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
             return View(_reserv);
         }
 
-        [HttpGet]
         public ActionResult AddReservation()
         {
-            return View();
 
+            WebClient n = new WebClient();
+            var json = n.DownloadString("https://openexchangerates.org/api/currencies.json");
+
+
+
+            var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            ViewBag.currency = values;
+            return View();
         }
         //resume
 
@@ -64,8 +85,16 @@ namespace Hotel.Controllers
 
             IserviceClient scl = new ServiceClient();
 
+            DateTime d1 = res.Arrivee;
+            DateTime d2 = res.dft;
+            if (sr.GetMany(x => (x.Arrivee <= d1 && x.dft <= d2 && x.dft > d1) || (x.Arrivee >= d1 && x.dft <= d2) || (x.Arrivee >= d1 && x.dft >= d2 && x.Arrivee < d2) || (x.Arrivee <= d1 && x.dft >= d2)).Where(l => l.chambre == res.chambre) != null)
+            {
+                ModelState.AddModelError("", "chambre non disponible");
+            }
+
             if (ModelState.IsValid)
             {
+                res.comfirmed = true;
                 sr.Add(res);
                 sr.Commit();
 
@@ -97,7 +126,7 @@ namespace Hotel.Controllers
 
             }
 
-            return RedirectToAction("Reservations");
+            return RedirectToAction("Reservations", "Reservation");
 
         }
 

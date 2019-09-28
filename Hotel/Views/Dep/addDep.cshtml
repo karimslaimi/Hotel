@@ -18,7 +18,7 @@
         <div class="control-group">
             <label class="control-label ">Titre </label>
             <div class="controls">
-                @Html.EditorFor(model => model.motif, new { htmlAttributes = new { @class = "span4" } }) 
+                @Html.EditorFor(model => model.motif, new { htmlAttributes = new { @class = "span4" } })
                 @Html.ValidationMessageFor(model => model.motif, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -39,6 +39,25 @@
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="control-group">
+            <label class="control-label ">Méthode de paiement</label>
+
+            <div class="controls">
+
+                @Html.RadioButtonFor(model => model.pmethod, "Espece") Espece
+
+
+                @Html.RadioButtonFor(model => model.pmethod, "Espece") Chèque
+
+
+                @Html.RadioButtonFor(model => model.pmethod, "Espece") Crédit
+
+            
+            </div>
+        </div>
+
+
         <br /><br />
     </div>
     <center>

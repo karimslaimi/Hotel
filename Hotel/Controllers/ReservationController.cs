@@ -2,13 +2,16 @@
 using Hotel.Security;
 using Microsoft.Ajax.Utilities;
 using Model;
+using Newtonsoft.Json;
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Hotel.Controllers
 {
@@ -56,7 +59,10 @@ namespace Hotel.Controllers
             }
             if(kw!=null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat==kw||x.type==kw || x.bons==kw || rech(x.Clients,kw)|| x.agence==kw || x.devise==kw).ToList();
+                _reserv = _reserv.Where(x => x.nat.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
+                x.type.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || 
+                x.bons.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || rech(x.Clients,kw)||
+                x.agence.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
             return View(_reserv);
@@ -72,10 +78,18 @@ namespace Hotel.Controllers
         [HttpGet]
         public ActionResult AddReservation()
         {
-            return View();
 
+            WebClient n = new WebClient();
+            var json = n.DownloadString("https://openexchangerates.org/api/currencies.json");
+            
+          
+
+            var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            ViewBag.currency = values;
+            return View();
         }
-        //resume
+            
+
 
 
 
@@ -85,6 +99,13 @@ namespace Hotel.Controllers
         {
 
             IserviceClient scl = new ServiceClient();
+
+            DateTime d1 = res.Arrivee;
+            DateTime d2 = res.dft;
+            if(sr.GetMany(x => (x.Arrivee <= d1 && x.dft <= d2 && x.dft > d1) || (x.Arrivee >= d1 && x.dft <= d2) || (x.Arrivee >= d1 && x.dft >= d2 && x.Arrivee < d2) || (x.Arrivee <= d1 && x.dft >= d2)).Where(l=>l.chambre==res.chambre)!=null)
+            {
+                ModelState.AddModelError("", "chambre non disponible");
+            }
 
             if (ModelState.IsValid)
             {
