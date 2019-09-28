@@ -17,7 +17,7 @@
         <p class="text-muted">
             Clients
         </p>
-    </a><a href="#" class="btn-box big span4">
+    </a><a href="#" class="btn-box big span4" id="money">
         <i class="icon-money"></i><b>@ViewBag.money <small>DT</small> </b>
         <p class="text-muted">
             revenu total
@@ -25,6 +25,31 @@
         </p>
     </a>
 </div>
+
+<div class="btn-box-row row-fluid" hidden="hidden" id="moneydetails">
+
+    <a href="#" class="btn-box medium span2 pull-right">
+        <i class="icon-money" style="color:forestgreen"></i><b>ViewBag.credit <small>dt</small></b>
+        <p class="text-muted">
+            Crédit
+        </p>
+    </a>
+
+    <a href="#" class="btn-box medium span2 pull-right">
+        <i class="icon-money" style="color:forestgreen"></i><b>ViewBag.cheque <small>dt</small></b>
+        <p class="text-muted">
+            Chèques
+        </p>
+    </a>
+
+    <a href="#" class="btn-box medium span2 pull-right">
+        <i class="icon-money" style="color:forestgreen"></i><b>ViewBag.espece <small>dt</small></b>
+        <p class="text-muted">
+            Espèce
+        </p>
+    </a>
+</div>
+
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {
@@ -78,3 +103,13 @@
 <h3 class="align-center" style="color:#29b7d3">Etat des chambres</h3>
 
 @Html.Action("etatChambres", "Home")
+
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+<script>
+    $('#money').click(function () {
+        $('#moneydetails').slideToggle(350);
+    });
+
+</script>

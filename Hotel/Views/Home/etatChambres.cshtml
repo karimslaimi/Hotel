@@ -1,7 +1,7 @@
 ﻿
 @{
         var list = ViewBag.listcmbr;
-        var icon = "icon-check";
+        var icon = "icon-check-empty";
     }
 
     @for (int j = 1; j <= 5; j++)
@@ -10,11 +10,11 @@
             {
                 if (list.Contains(i))
                 {
-                    icon = "icon-check-empty";
+                    icon = "icon-check";
                 }
                 else
                 {
-                    icon = "icon-check";
+                    icon = "icon-check-empty";
                 }
                 <a href="#" class="btn-box small span2">
                     <i class="@icon"></i>
