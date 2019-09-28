@@ -208,16 +208,20 @@
 
                         '<div class="control-group"><label class="control-label "><b>Montant</b></label><div class="controls">' + data.montant + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +
-                        '<div class="control-group"><label class="control-label "><b>Check-in</b></label><div class="controls">' + ToJavaScriptDate(data.Arrivee) + '</div></div>' +
+                        '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +                
+                        
+                        '<div class="control-group"><label class="control-label "><b>Methode de paiement</b> </label><div class="controls">' + data.methpaie + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label "><b>Check-out</b></label><div class="controls">' + ToJavaScriptDate(data.dft) + '</div></div></div >' +
+                        '<div class="control-group"><label class="control-label "><b>devise</b> </label><div class="controls">' + data.devise + '</div></div></div>' +
 
+                        '<div class="control-group"><label class="control-label "><b>Agence</b> </label><div class="controls">' + data.agence + '</div></div>' +
 
                         '<div class="sub-entry">' +
 
+                        '<div class="control-group"><label class="control-label "><b>Check-in</b></label><div class="controls">' + ToJavaScriptDate(data.Arrivee) + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label "><b>Agence</b> </label><div class="controls">' + data.agence + '</div></div>' +
+                        '<div class="control-group"><label class="control-label "><b>Check-out</b></label><div class="controls">' + ToJavaScriptDate(data.dft) + '</div></div >' +
+
 
 
                         '<div class="control-group"><label class="control-label "><b>Nationnalité</b></label><div class="controls">' + data.nat + '</div> </div>' +
@@ -229,7 +233,7 @@
 
                         '<div class="control-group"><label class="control-label "><b>Nom Client 2</b></label><div class="controls">' + c2 + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div>';
+                        '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div></div>';
 
                     $('#content').html(text);
 

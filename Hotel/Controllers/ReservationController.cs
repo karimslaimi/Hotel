@@ -30,13 +30,19 @@ namespace Hotel.Controllers
         [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw,int? num)
         {
-            List<Reservation> _reserv = sr.GetMany().ToList();
+            List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
 
             if (d1 != null && d2==null)
             {
                 _reserv = _reserv.Where(x => x.Arrivee >= d1).ToList();
             }
-            if (d2 != null & d1==null)
+            if(d1==null && d2 != null)
+            {
+                _reserv = _reserv.Where(x => x.dft >= d2).ToList();
+
+
+            }
+            if (d2 != null & d1!=null)
             {
                 _reserv = _reserv.Where(x =>(x.Arrivee<=d1 && x.dft<=d2 && x.dft>d1)||(x.Arrivee>=d1 && x.dft<=d2)||(x.Arrivee>=d1 && x.dft>=d2 && x.Arrivee<d2)|| (x.Arrivee<=d1 && x.dft>=d2) ).ToList();
             }
