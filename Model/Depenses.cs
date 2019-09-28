@@ -16,5 +16,9 @@ namespace Hotel.Models
         public float montant { get; set; }
         [Required]
         public string description { get; set; }
+        [Required]
+        public string pmethod { get; set; }
+
+        public DateTime datedep { get; set; }
     }
 }

@@ -42,33 +42,50 @@ namespace Hotel.Controllers
             //ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.Clients.Count()).Sum();
 
 
-
-            if(dt1!=null && dt2 == null)//if start date not null and end date is null that means from dt1 until now
+           
+            if (dt1!=null && dt2 == null)//if start date not null and end date is null that means from dt1 until now
             {
                 ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Count();//nombre reservation
                 ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(w => w.montant);//total income
                 ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Select(l => l.Clients.Count()).Sum();
-               
+
+                ViewBag.credit = _res.Where(x => x.methpaie == "credit" && x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(l => l.montant);
+                ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(l => l.montant);
+                ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(l => l.montant);
+
             }
             if (dt1 == null && dt2 != null)//if the start date is null and the end date is not null that means since the begining until now until now 
             {
                 ViewBag.reservsem = _res.Where(x => x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Count();//nombre reservation
                 ViewBag.money = _res.Where(x => x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(w => w.montant);//total income
                 ViewBag.client = _res.Where(x => x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Select(l => l.Clients.Count()).Sum();
+
+                ViewBag.credit = _res.Where(x => x.methpaie == "credit" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
+                ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
+                ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
+
             }
             if (dt1 != null && dt2 != null)//if both dt1 and dt2 are not null that means between these dates
             {
                 ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
                 ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income
                 ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l => l.Clients.Count()).Sum();
+
+                ViewBag.credit = _res.Where(x => x.methpaie == "credit" && x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(l => l.montant);
+                ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(l => l.montant);
+                ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(l => l.montant);
+
             }
             if (dt1 == null && dt2 == null)//if both null give him the stats of this week
             {
-                DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
-                DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
-                ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
-                ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income
-                ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l => l.Clients.Count()).Sum();
+                //DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
+                //DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
+                ViewBag.reservsem = _res.Where(x=>x.Arrivee.Month==DateTime.Now.Month).Count();//nombre reservation
+                ViewBag.money = _res.Where(x=>x.Arrivee.Month == DateTime.Now.Month).Sum(w => w.montant);//total income
+                ViewBag.client = _res.Where(x => x.Arrivee.Month == DateTime.Now.Month).Select(l => l.Clients.Count()).Sum();
+                ViewBag.credit = _res.Where(x => x.methpaie == "credit").Sum(l => l.montant);
+                ViewBag.cheque = _res.Where(x => x.methpaie == "cheque").Sum(l => l.montant);
+                ViewBag.espece = _res.Where(x => x.methpaie == "espece").Sum(l => l.montant);
             }
 
 

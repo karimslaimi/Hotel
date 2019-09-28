@@ -109,7 +109,7 @@ namespace Services.ServiceReservation
                 {
                     Query = Query.OrderBy(orderBy);
                 }
-                return Query.ToList();
+                return Query.Reverse().ToList();
 
             }
         }

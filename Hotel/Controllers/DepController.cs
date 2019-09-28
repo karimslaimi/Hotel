@@ -31,6 +31,7 @@ namespace Hotel.Controllers
             try
             {
                 ServiceDepenses sd = new ServiceDepenses();
+                dep.datedep = DateTime.Now;
                 sd.Add(dep);
                 return RedirectToAction("allDep");
             }

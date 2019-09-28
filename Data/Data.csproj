@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201909211713021_data annot.Designer.cs">
       <DependentUpon>201909211713021_data annot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909281326522_model changing.cs" />
+    <Compile Include="Migrations\201909281326522_model changing.Designer.cs">
+      <DependentUpon>201909281326522_model changing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909211713021_data annot.resx">
       <DependentUpon>201909211713021_data annot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909281326522_model changing.resx">
+      <DependentUpon>201909281326522_model changing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

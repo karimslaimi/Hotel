@@ -32,13 +32,17 @@ namespace Hotel.Controllers
         {
             List<Reservation> _reserv = sr.GetMany().ToList();
 
-            if (d1 != null)
+            if (d1 != null && d2==null)
             {
                 _reserv = _reserv.Where(x => x.Arrivee >= d1).ToList();
             }
-            if (d2 != null)
+            if (d2 != null & d1==null)
             {
-                _reserv = _reserv.Where(x => x.dft <= d2).ToList();
+                _reserv = _reserv.Where(x =>(x.Arrivee<=d1 && x.dft<=d2 && x.dft>d1)||(x.Arrivee>=d1 && x.dft<=d2)||(x.Arrivee>=d1 && x.dft>=d2 && x.Arrivee<d2)|| (x.Arrivee<=d1 && x.dft>=d2) ).ToList();
+            }
+            if(d1!=null && d2 != null)
+            {
+
             }
             if (num != null)
             {
@@ -46,11 +50,14 @@ namespace Hotel.Controllers
             }
             if(kw!=null && kw != "")
             {
-                _reserv = _reserv.Where(x => x.nat.Contains(kw)||x.type==kw || x.bons==kw || rech(x.Clients,kw)).ToList();
+                _reserv = _reserv.Where(x => x.nat==kw||x.type==kw || x.bons==kw || rech(x.Clients,kw)|| x.agence==kw || x.devise==kw).ToList();
             }
 
             return View(_reserv);
         }
+        /*("select e from Logement e , Contrat c where (e.idLog=c.logement and (:d1 not between c.dateDeb and c.dateFin) and (:d2 not between c.dateDeb and c.dateFin) and "
+			+ "(c.dateDeb not between :d1 and :d2) and (c.dateFin not between :d1 and :d2)) "
+			+ "or (e.idLog not in (select a.logement from Contrat a))")*/
 
 
 
@@ -138,17 +145,20 @@ namespace Hotel.Controllers
         {
             IserviceClient sc = new ServiceClient();
             IserviceReservation sd = new ServiceReservation();
-            dynamic dp = sd.GetMany(x=>x.id==id).Select(s=>new {
-                id=s.id,
-                chambre=s.chambre,
-                agence=s.agence,
-                type=s.type,
-                Arrivee=s.Arrivee,
-                nat=s.nat,
-                nombre=s.nombre,
-                montant=s.montant,
-                bons=s.bons,
-                dft=s.dft,
+            dynamic dp = sd.GetMany(x => x.id == id).Select(s => new {
+                id = s.id,
+                chambre = s.chambre,
+                agence = s.agence,
+                type = s.type,
+                Arrivee = s.Arrivee,
+                nat = s.nat,
+                nombre = s.nombre,
+                montant = s.montant,
+                bons = s.bons,
+                dft = s.dft,
+                methpaie = s.methpaie,
+                devise=s.devise,
+                comfirmed=s.comfirmed,
                 Clients = s.Clients.Select(g => new { nomC=g.nomC})
 
             });

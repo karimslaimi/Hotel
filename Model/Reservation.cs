@@ -29,6 +29,12 @@ namespace Hotel.Models
         public string bons { get; set; }
         [Required]
         public DateTime dft { get; set; }
+        [Required]
+        public string methpaie { get; set; }
+        [Required]
+        public bool comfirmed { get; set; }
+        [Required]
+        public string devise { get; set; }
 
         public ICollection<Client> Clients { get; set; }
     }
