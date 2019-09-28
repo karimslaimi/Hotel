@@ -108,12 +108,16 @@
 
         @if (item.comfirmed)
         {
-            <td style="color:green">Confirmé </td>
 
+            <td>
+                <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Reservation",new { id = item.id })">Confirmée</a>
+            </td>
         }
         else
         {
-            <td style="color:blue">Confirmé </td>
+            <td style="color:red">
+                Non confirmée
+            </td>
         }
 
         <td>
@@ -161,7 +165,17 @@
 
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
+<script>
+    $(".confirm").click(function () {
 
+        if (confirm("Voulez vous annuler cette réservation ?")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+</script>
 
 
 <script>
