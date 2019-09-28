@@ -22,7 +22,7 @@ namespace Hotel.Controllers
 
             List<Reservation> _res = sr.GetMany().ToList();
             IserviceDepenses sd = new ServiceDepenses();
-            List<Depenses> _dep = sd.GetMany().Take(5).ToList();
+            List<Depenses> _dep = sd.GetMany().Reverse().Take(5).ToList();
             ViewData["lastdep"] = _dep;
 
             //if (dt1 == null )

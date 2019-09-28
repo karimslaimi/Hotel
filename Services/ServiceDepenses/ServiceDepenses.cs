@@ -108,7 +108,7 @@ namespace Services.ServiceDepence
                 {
                     Query = Query.OrderBy(orderBy);
                 }
-                return Query.Reverse().ToList();
+                return Query.ToList();
 
             }
         }
