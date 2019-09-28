@@ -2,11 +2,13 @@
 using Hotel.Security;
 using Microsoft.Ajax.Utilities;
 using Model;
+using Newtonsoft.Json;
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -72,6 +74,7 @@ namespace Hotel.Controllers
         [HttpGet]
         public ActionResult AddReservation()
         {
+         
             return View();
 
         }
@@ -85,7 +88,7 @@ namespace Hotel.Controllers
         {
 
             IserviceClient scl = new ServiceClient();
-
+          
             if (ModelState.IsValid)
             {
                 res.comfirmed = true;
