@@ -40,7 +40,7 @@ namespace Hotel.Controllers
             //ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
             //ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income
             //ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.Clients.Count()).Sum();
-
+            var reserva = sr.GetMany().GroupBy(x => x.devise).Select(s => new { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
            
             if (dt1!=null && dt2 == null)//if start date not null and end date is null that means from dt1 until now
@@ -53,6 +53,8 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(l => l.montant);
                 ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Sum(l => l.montant);
 
+                ViewBag.reserva = sr.GetMany(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).GroupBy(x => x.devise).Select(s => new { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+
             }
             if (dt1 == null && dt2 != null)//if the start date is null and the end date is not null that means since the begining until now until now 
             {
@@ -63,6 +65,8 @@ namespace Hotel.Controllers
                 ViewBag.credit = _res.Where(x => x.methpaie == "credit" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
                 ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).Sum(l => l.montant);
+
+                ViewBag.reserva = sr.GetMany(x => x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).GroupBy(x => x.devise).Select(s => new { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
             if (dt1 != null && dt2 != null)//if both dt1 and dt2 are not null that means between these dates
@@ -75,6 +79,8 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _res.Where(x => x.methpaie == "cheque" && x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _res.Where(x => x.methpaie == "espece" && x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(l => l.montant);
 
+                ViewBag.reserva = sr.GetMany(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).GroupBy(x => x.devise).Select(s => new { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+
             }
             if (dt1 == null && dt2 == null)//if both null give him the stats of this week
             {
@@ -86,6 +92,9 @@ namespace Hotel.Controllers
                 ViewBag.credit = _res.Where(x => x.methpaie == "credit").Sum(l => l.montant);
                 ViewBag.cheque = _res.Where(x => x.methpaie == "cheque").Sum(l => l.montant);
                 ViewBag.espece = _res.Where(x => x.methpaie == "espece").Sum(l => l.montant);
+
+                ViewBag.reserva = sr.GetMany(x => x.Arrivee.Month == DateTime.Now.Month).GroupBy(x => x.devise).Select(s => new { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+
             }
 
 
