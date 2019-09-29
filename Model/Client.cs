@@ -15,6 +15,7 @@ namespace Model
         [Key]
         public int idc { get; set; }
         public string nomC { get; set; }
+
         [JsonIgnore]
         [ForeignKey("reservation")]
         public int idr { get; set; }
