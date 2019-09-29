@@ -74,6 +74,14 @@
     <Compile Include="Migrations\201909281326522_model changing.Designer.cs">
       <DependentUpon>201909281326522_model changing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909292155079_revn.cs" />
+    <Compile Include="Migrations\201909292155079_revn.Designer.cs">
+      <DependentUpon>201909292155079_revn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909292325256_revenu.cs" />
+    <Compile Include="Migrations\201909292325256_revenu.Designer.cs">
+      <DependentUpon>201909292325256_revenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909281326522_model changing.resx">
       <DependentUpon>201909281326522_model changing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909292155079_revn.resx">
+      <DependentUpon>201909292155079_revn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909292325256_revenu.resx">
+      <DependentUpon>201909292325256_revenu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

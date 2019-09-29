@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Model.Revenu>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/template.cshtml";
+}
+
+
+<h2 class="align-center">Réservations</h2>
+
+<a href="@Url.Action("Detail","Revenu")" class="btn btn-primary pull-right ">Plus détaillé</a>
+
+<br />
+<hr />
+@using (Html.BeginForm("Index", "Revenu", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+{
+    <div class="span3 ">
+
+        <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
+    </div>
+    <div class="span3 align-center ">
+        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls datepicker span8 " })
+
+    </div>
+    <div class="span3  ">
+        <b> Jusqu'a</b>
+        @Html.TextBox("d2", "", new { @type = "date", @class = "controls  datepicker span8 " })
+    </div>
+
+    <div class="span3  ">
+
+        <button type="submit" class="pull-right btn btn-success">Chercher</button>
+    </div>
+}
+<hr />
+<table class="datatable-1 table table-bordered table-striped  display dataTable ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.reservation.bons)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.devise)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.montant)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.daterev)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.reservation.bons)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.devise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.montant)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.daterev)
+            </td>
+           
+        </tr>
+    }
+
+</table>

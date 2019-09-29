@@ -104,15 +104,14 @@ namespace Hotel.Controllers
 
             DateTime d1 = res.Arrivee;
             DateTime d2 = res.dft;
-            //if(sr.GetMany(x => (x.Arrivee <= d1 && x.dft > d1) ||
-            //                   (x.Arrivee >= d1 && x.dft <= d2) || 
-            //                   (x.Arrivee >= d1 && x.dft >= d1 && x.Arrivee < d2)).Where(l=>l.chambre==res.chambre)!=null)
-            //{
-            //    ModelState.AddModelError("", "chambre non disponible");
-            //}
+            List<Reservation> rss = sr.GetMany(x => (x.chambre == res.chambre) && (! (x.Arrivee > d2) && !(x.dft <= d1))).ToList();
+            if ( rss.Count!=0)
+            {
+                ModelState.AddModelError("", "chambre non disponible");
+            }
 
-         
-            if(name1 != null && name1!="")
+
+            if (name1 != null && name1!="")
             {
                 Client cl = new Client();
                 cl.nomC = name1;
@@ -140,11 +139,30 @@ namespace Hotel.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                Revenu rv = new Revenu();
+                rv.devise = res.devise;
+                rv.montant = res.montant;
+                rv.type = res.methpaie;
+                rv.daterev = DateTime.Now;
+
+                res.revenu = rv;
                 res.comfirmed = true;
                 res.Clients = cll;
                 sr.Add(res);
                 sr.Commit();
 
+            }
+            else
+            {
+                WebClient n = new WebClient();
+                var json = n.DownloadString("https://openexchangerates.org/api/currencies.json");
+
+
+
+                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                ViewBag.currency = values;
+                return View();
             }
 
             return RedirectToAction("Reservations","Reservation");

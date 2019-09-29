@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -37,5 +38,10 @@ namespace Hotel.Models
         public string devise { get; set; }
 
         public ICollection<Client> Clients { get; set; }
+
+
+      
+
+        public virtual Revenu revenu {get;set;}
     }
 }
