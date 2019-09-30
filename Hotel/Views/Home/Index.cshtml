@@ -6,6 +6,19 @@
 }
 
 
+@using Model;
+
+<script>
+    $(document).ready(function () {
+        var inst =@ViewData["reserva"];
+        console.log(inst);
+
+            
+    });
+</script>
+
+
+
 <div class="btn-box-row row-fluid">
     <a href="#" class="btn-box big span4">
         <i class=" icon-home"></i><b>@ViewBag.reservsem</b>
@@ -20,7 +33,7 @@
     </a><a href="#" class="btn-box big span4" id="money">
         <i class="icon-money"></i><b>@ViewBag.money <small>DT</small> </b>
         <p class="text-muted">
-            revenu total
+            Dépenses total
 
         </p>
     </a>
@@ -71,33 +84,30 @@
 <table class="table table-striped">
     <tr>
         <th>
-            <center>Motif</center>
+            <center>Devise</center>
         </th>
         <th>
             <center> Montant</center>
         </th>
         <th>
-            <center> Description</center>
+            
         </th>
 
     </tr>
 
-    @foreach (var item in (List<Hotel.Models.Depenses>)ViewData["lastdep"])
+    @foreach (var item in (List<Revenu>)ViewData["reserva"])
     {
         <tr>
             <td>
-                <center>  @Html.DisplayFor(modelItem => item.motif)</center>
+                <center> @item.devise</center>
             </td>
             <td>
-                <center>@Html.DisplayFor(modelItem => item.montant) <small>Dt</small></center>
+                <center>@item.montant </center>
             </td>
-            <td>
-                <center> @Html.DisplayFor(modelItem => item.description)</center>
-            </td>
+          
         </tr>
-
     }
-</table>
+    </table>
 <br /><br />
 <hr />
 <h3 class="align-center" style="color:#29b7d3">Etat des chambres</h3>
