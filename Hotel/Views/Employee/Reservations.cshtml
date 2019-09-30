@@ -23,11 +23,11 @@
 
 <h2 class="align-center">Réservations</h2>
 
-<a href="@Url.Action("AddReservation","Reservation")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
+<a href="@Url.Action("AddReservation","Employee")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
 
 <br />
 <hr />
-@using (Html.BeginForm("Reservations", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Reservations", "Employee", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {<div class="span3 ">
 
         <input type="text" name="kw" class="controls span12" placeholder="Chercher...">

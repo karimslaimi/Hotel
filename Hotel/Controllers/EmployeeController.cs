@@ -65,7 +65,7 @@ namespace Hotel.Controllers
 
             return View(_reserv);
         }
-
+        [HttpGet]
         public ActionResult AddReservation()
         {
 
@@ -79,7 +79,7 @@ namespace Hotel.Controllers
             return View();
         }
         //resume
-
+        [HttpPost]
         public ActionResult AddReservation(Reservation res, string name1, string name2, string name3)
         {
 
