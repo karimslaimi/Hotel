@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Hotel.Security;
+using Model;
 using Services.ServiceRevenu;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Hotel.Controllers
         IserviceRevenu srev = new ServiceRevenu();
 
         // GET: Revenu
+        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Index(string kw, DateTime? d1, DateTime? d2)
         {
             List<Revenu> rev = srev.GetMany().Reverse().ToList();
@@ -45,7 +47,7 @@ namespace Hotel.Controllers
 
             return View(rev);
         }
-
+        [CustomAuthorizeAttribute(Roles = "director")]
         // GET: Revenu/Details/5
         public ActionResult Details()
         {

@@ -31,6 +31,7 @@ namespace Hotel.Controllers
 
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
         {
+
             List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
 
             if (d1 != null && d2 == null)
@@ -85,35 +86,32 @@ namespace Hotel.Controllers
 
             IserviceClient scl = new ServiceClient();
 
+            IList<Client> cll = new List<Client>();
+
             DateTime d1 = res.Arrivee;
             DateTime d2 = res.dft;
-            if (sr.GetMany(x => (x.Arrivee <= d1 && x.dft <= d2 && x.dft > d1) || (x.Arrivee >= d1 && x.dft <= d2) || (x.Arrivee >= d1 && x.dft >= d2 && x.Arrivee < d2) || (x.Arrivee <= d1 && x.dft >= d2)).Where(l => l.chambre == res.chambre) != null)
+            List<Reservation> rss = sr.GetMany(x => (x.chambre == res.chambre) && (!(x.Arrivee > d2) && !(x.dft <= d1))).ToList();
+            if (rss.Count != 0)
             {
                 ModelState.AddModelError("", "chambre non disponible");
             }
 
-            if (ModelState.IsValid)
-            {
-                res.comfirmed = true;
-                sr.Add(res);
-                sr.Commit();
 
-            }
             if (name1 != null && name1 != "")
             {
                 Client cl = new Client();
                 cl.nomC = name1;
                 cl.idr = res.id;
-                scl.Add(cl);
-                scl.Commit();
+                cll.Add(cl);
+                //scl.Commit();
             }
             if (name2 != null && name2 != "")
             {
                 Client cl = new Client();
                 cl.nomC = name2;
                 cl.idr = res.id;
-                scl.Add(cl);
-                scl.Commit();
+                cll.Add(cl);
+                //scl.Commit();
 
             }
             if (name3 != null && name3 != "")
@@ -121,9 +119,36 @@ namespace Hotel.Controllers
                 Client cl = new Client();
                 cl.nomC = name3;
                 cl.idr = res.id;
-                scl.Add(cl);
-                scl.Commit();
+                cll.Add(cl);
+                //scl.Commit();
 
+            }
+            if (ModelState.IsValid)
+            {
+
+                Revenu rv = new Revenu();
+                rv.devise = res.devise;
+                rv.montant = res.montant;
+                rv.type = res.methpaie;
+                rv.daterev = DateTime.Now;
+
+                res.revenu = rv;
+                res.comfirmed = true;
+                res.Clients = cll;
+                sr.Add(res);
+                sr.Commit();
+
+            }
+            else
+            {
+                WebClient n = new WebClient();
+                var json = n.DownloadString("https://openexchangerates.org/api/currencies.json");
+
+
+
+                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                ViewBag.currency = values;
+                return View();
             }
 
             return RedirectToAction("Reservations", "Reservation");
@@ -197,6 +222,21 @@ namespace Hotel.Controllers
 
 
         }
+
+
+
+
+        public ActionResult confirmer(int id)
+        {
+
+            Reservation rs = sr.GetById(id);
+            rs.comfirmed = false;
+            sr.Update(rs);
+            sr.Commit();
+            return RedirectToAction("reservations");
+        }
+
+
         public JsonResult Detailres(int id)
         {
             IserviceClient sc = new ServiceClient();
@@ -212,6 +252,9 @@ namespace Hotel.Controllers
                 montant = s.montant,
                 bons = s.bons,
                 dft = s.dft,
+                methpaie = s.methpaie,
+                devise = s.devise,
+                comfirmed = s.comfirmed,
                 Clients = s.Clients.Select(g => new { nomC = g.nomC })
 
             });
@@ -222,8 +265,6 @@ namespace Hotel.Controllers
             return Json(dp, JsonRequestBehavior.AllowGet);
 
         }
-
-
 
         private bool rech(ICollection<Client> cl, string kw)
         {
