@@ -251,5 +251,13 @@ namespace Hotel.Controllers
             return flag; 
         }
 
+        public ActionResult Facture()
+        {
+
+
+
+            return View() ;
+        }
     }
+
 }

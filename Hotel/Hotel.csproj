@@ -338,6 +338,7 @@
     <Content Include="Views\Home\etatChambres.cshtml" />
     <Content Include="Views\Revenu\Index.cshtml" />
     <Content Include="Views\Revenu\Details.cshtml" />
+    <Content Include="Views\Reservation\Facture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
