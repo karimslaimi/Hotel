@@ -251,12 +251,15 @@ namespace Hotel.Controllers
             return flag; 
         }
 
-        public ActionResult Facture()
+        public ActionResult Facture(int id)
         {
+            Reservation res = sr.GetById(id);
+
+            
 
 
 
-            return View() ;
+            return new RazorPDF.PdfResult(res,"Facture") ;
         }
     }
 
