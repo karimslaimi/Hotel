@@ -1,21 +1,28 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
 using Microsoft.Ajax.Utilities;
 using Model;
 using Newtonsoft.Json;
 using PdfSharp;
+using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.UI;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
+using PageSize = iTextSharp.text.PageSize;
 
 namespace Hotel.Controllers
 {
@@ -257,28 +264,53 @@ namespace Hotel.Controllers
 
         public ActionResult Facture(int id)
         {
-            Reservation resa = sr.GetById(id);
+            Reservation resa = sr.Get(x=>x.id==id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string html= "<h1>Erriadh Hotel Djerba</h1>< center >< h2 > Facture N°"+resa.id+
+                "</ h2 ></ center >< br />< br />< h3 >< b > Nom et Prénom :"+resa.Clients.First()+
+                " </ b ></ h3 > < h3 >< b > N° Chambre:"+resa.chambre+
+                " </ b ></ h3 >< h3 >< b > Type Chambre:"+resa.type +
+                "</ b ></ h3 >< h3 >< b > Montant payé:"+ resa.montant+
+                "</ b ></ h3 > < h3 >< b > Payé"+(resa.methpaie=="Espece"?" en":"par")+" :"+resa.methpaie+
+                "</ b ></ h3 >< h3 >< b > Date du réservation : </ b > de"+ resa.Arrivee.ToString("dd/MM/yyyy")+" à "+resa.dft.ToString("dd/MM/yyyy")+
+                "</ h3 >< div class='span4 float-lg-right'><b><p>Djerba, le "+@DateTime.Today.Date.ToString("dd/MM/yyyy")+"</p></b></div>";
+
+
+          
+
+
 
 
             Byte[] res = null;
             using (MemoryStream ms = new MemoryStream())
             {
-                var pdf = PdfGenerator.GeneratePdf("some text", .PageSize.A4);
-                pdf.Save(ms);
+              
+                StringReader reader = new StringReader(html);
+                Document PdfFile = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(PdfFile, ms);
+                PdfFile.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, reader);
+                PdfFile.Close();
+                PdfFile.Close();
                 res = ms.ToArray();
+                return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
+
             }
 
-            //StringWriter sw = new StringWriter();
-            //HtmlTextWriter hw = new HtmlTextWriter(sw);
-            //pnlPerson.RenderControl(hw);
-            //StringReader sr = new StringReader(sw.ToString());
-            //Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
-            //HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
-            //PdfWriter.GetInstance(pdfDoc, new FileStream(Server.MapPath("~/PDFs/") + "mypdf.pdf", FileMode.Create));
-            //pdfDoc.Open();
-            //htmlparser.Parse(sr);
-            //pdfDoc.Close();
-            return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
+          
+       
 
             
         }
