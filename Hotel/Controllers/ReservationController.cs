@@ -3,15 +3,19 @@ using Hotel.Security;
 using Microsoft.Ajax.Utilities;
 using Model;
 using Newtonsoft.Json;
+using PdfSharp;
+using PdfSharp.Pdf;
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace Hotel.Controllers
 {
@@ -253,13 +257,30 @@ namespace Hotel.Controllers
 
         public ActionResult Facture(int id)
         {
-            Reservation res = sr.GetById(id);
+            Reservation resa = sr.GetById(id);
+
+
+            Byte[] res = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                var pdf = PdfGenerator.GeneratePdf("some text", .PageSize.A4);
+                pdf.Save(ms);
+                res = ms.ToArray();
+            }
+
+            //StringWriter sw = new StringWriter();
+            //HtmlTextWriter hw = new HtmlTextWriter(sw);
+            //pnlPerson.RenderControl(hw);
+            //StringReader sr = new StringReader(sw.ToString());
+            //Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+            //HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+            //PdfWriter.GetInstance(pdfDoc, new FileStream(Server.MapPath("~/PDFs/") + "mypdf.pdf", FileMode.Create));
+            //pdfDoc.Open();
+            //htmlparser.Parse(sr);
+            //pdfDoc.Close();
+            return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
 
             
-
-
-
-            return new RazorPDF.PdfResult(res,"Facture") ;
         }
     }
 
