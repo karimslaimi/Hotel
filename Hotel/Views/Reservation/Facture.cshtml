@@ -4,18 +4,31 @@
     ViewBag.Title = "Facture";
     Layout = null;
 }
-<h1>Erriadh Hotel Djerba</h1>
-<center>
-    <h2>Facture N°@Model.id</h2>
-</center>
-<br /><br />
-<h3><b>Nom et Prénom :@Model.Clients.FirstOrDefault() </b></h3>
-<h3><b>N° Chambre :@Model.chambre </b></h3>
-<h3><b>Type Chambre :@Model.type </b></h3>
-<h3><b>Montant payé :@Model.montant</b></h3>
-<h3><b>Payé par(en) : @Model.methpaie  </b></h3>
-<h3><b>Date du réservation : </b>de @Model.Arrivee.ToString("dd/MM/yyyy") à @Model.dft.ToString("dd/MM/yyyy")</h3>
+<head>
+    <link type="text/css" href="~/Content/code/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="~/Content/code/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>&nbsp;Erriadh Hotel Djerba</h1>
+    <br /><br />
+    <center class="justify-content-center">
+        <h2>Facture N°@Model.id</h2>
+    </center>
+    <br /><br />
 
-<div class="span4 float-lg-right">
-    <b><p>Djerba, le @DateTime.Today.Date.ToString("dd/MM/yyyy")</p></b>
-</div>
+          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom : </b><span>@Model.Clients.FirstOrDefault().nomC</span></p>
+    <br />
+          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;N° Chambre : </b> @Model.chambre</p>
+    <br />     
+    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Type Chambre : </b>@Model.type</p>
+    <br />     
+    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Date du réservation : </b>de @Model.Arrivee.ToString("dd/MM/yyyy") à @Model.dft.ToString("dd/MM/yyyy")</p>
+    <br />
+          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Montant payé : </b>@Model.montant</p>
+    <br />      
+    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Payé @(@Model.methpaie == "Espece" ? " en" : "par") : </b>@Model.methpaie  </p>
+    <br /><br />
+    <div class="span8 " style="margin-left:1000px">
+        <p style="font-size:20px"><b>Djerba, le @DateTime.Today.Date.ToString("dd/MM/yyyy")</b></p>
+    </div>
+</body>

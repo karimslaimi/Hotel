@@ -3,26 +3,23 @@ using Hotel.Security;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
-using Microsoft.Ajax.Utilities;
+using iTextSharp.tool.xml.parser;
+using iTextSharp.tool.xml.pipeline.css;
+using iTextSharp.tool.xml.pipeline.end;
+using iTextSharp.tool.xml.pipeline.html;
 using Model;
 using Newtonsoft.Json;
-using PdfSharp;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
+
 using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Text;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using System.Web.UI;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
-using PageSize = iTextSharp.text.PageSize;
+
 
 namespace Hotel.Controllers
 {
@@ -278,41 +275,82 @@ namespace Hotel.Controllers
 
 
 
-            string html= "<h1>Erriadh Hotel Djerba</h1>< center >< h2 > Facture N°"+resa.id+
-                "</ h2 ></ center >< br />< br />< h3 >< b > Nom et Prénom :"+resa.Clients.First()+
-                " </ b ></ h3 > < h3 >< b > N° Chambre:"+resa.chambre+
-                " </ b ></ h3 >< h3 >< b > Type Chambre:"+resa.type +
-                "</ b ></ h3 >< h3 >< b > Montant payé:"+ resa.montant+
-                "</ b ></ h3 > < h3 >< b > Payé"+(resa.methpaie=="Espece"?" en":"par")+" :"+resa.methpaie+
-                "</ b ></ h3 >< h3 >< b > Date du réservation : </ b > de"+ resa.Arrivee.ToString("dd/MM/yyyy")+" à "+resa.dft.ToString("dd/MM/yyyy")+
-                "</ h3 >< div class='span4 float-lg-right'><b><p>Djerba, le "+@DateTime.Today.Date.ToString("dd/MM/yyyy")+"</p></b></div>";
+            string html=
+
+                    "< body>< h1 > &nbsp; Erriadh Hotel Djerba </ h1 >< br />< br /><center class='justify - content - center' ><h2 > Facture N°" + resa.id +
+            "</ h2 ></ center >< br />< br /><p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Nom et Prénom: </ b >< span >" + resa.Clients.FirstOrDefault().nomC +
+            " </ span ></ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; N° Chambre: </ b >" + resa.chambre +
+            " </ p >< br /> < p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Type Chambre : </ b >" + resa.type +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Date du réservation: </ b > de " + resa.Arrivee.ToString("dd/MM/yyyy") + " à " + resa.dft.ToString("dd/MM/yyyy") +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Montant payé : </ b >" + resa.montant + " " + resa.devise +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Payé " + (resa.methpaie == "Espece" ? " en" : "par") + " :</b>" + resa.methpaie +
+            "</ p >< br />< br /> <div class='pull-right'> <p style = 'font-size:20px' >< b > Djerba, le" + DateTime.Today.Date.ToString("dd/MM/yyyy") +
+            "</b></p> </div></body>";
 
 
-          
+
+          //  var cssfiles =System.IO.File.ReadAllText(@"C:\Users\karim\source\repos\Hotel\Hotel\Content\code\bootstrap\css\bootstrap.min.css") +
+          //  System.IO.File.ReadAllText(@"C:\Users\karim\source\repos\Hotel\Hotel\Content\code\bootstrap\css\bootstrap-responsive.min.css");
 
 
 
+          //  Byte[] res = null;
+          //  using (var cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(cssfiles)))
+          //  {
+                
 
-            Byte[] res = null;
-            using (MemoryStream ms = new MemoryStream())
+          //  using (MemoryStream ms = new MemoryStream())
+          //  {
+               
+          //      StringReader reader = new StringReader(html);
+          //      Document PdfFile = new Document(PageSize.A4);
+          //      PdfWriter writer = PdfWriter.GetInstance(PdfFile, ms);
+                   
+          //      PdfFile.Open();
+          //      XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, ms,cssMemoryStream);
+               
+          //      PdfFile.Close();
+          //      res = ms.ToArray();
+
+          //      return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
+          //     // return View(resa);
+          //  }
+
+          //}
+
+
+            List<string> cssFiles = new List<string>
             {
-              
-                StringReader reader = new StringReader(html);
-                Document PdfFile = new Document(PageSize.A4);
-                PdfWriter writer = PdfWriter.GetInstance(PdfFile, ms);
-                PdfFile.Open();
-                XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, reader);
-                PdfFile.Close();
-                PdfFile.Close();
-                res = ms.ToArray();
-                return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
 
-            }
+               "~/Content/code/bootstrap/css/bootstrap.min.css" ,
+                "~/Content/code/bootstrap/css/bootstrap-responsive.min.css"
+            };
 
-          
-       
+            MemoryStream output = new MemoryStream();
 
-            
+            MemoryStream input = new MemoryStream(Encoding.UTF8.GetBytes(html));
+
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.GetInstance(document, output);
+            writer.CloseStream = false;
+
+            document.Open();
+            HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+            htmlContext.SetTagFactory(iTextSharp.tool.xml.html.Tags.GetHtmlTagProcessorFactory());
+
+            ICSSResolver cssResolver = XMLWorkerHelper.GetInstance().GetDefaultCssResolver(false);
+            cssFiles.ForEach(i => cssResolver.AddCssFile(System.Web.HttpContext.Current.Server.MapPath(i), true));
+
+            var pipeline = new CssResolverPipeline(cssResolver, new HtmlPipeline(htmlContext, new PdfWriterPipeline(document, writer)));
+            var worker = new XMLWorker(pipeline, true);
+            var p = new XMLParser(worker);
+            p.Parse(input);
+            document.Close();
+
+             return File(output.ToArray(), "application/pdf", "facture N°" + resa.id + ".pdf");
+
+
+            //return View(resa);
         }
     }
 

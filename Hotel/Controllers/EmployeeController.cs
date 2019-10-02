@@ -1,5 +1,12 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using iTextSharp.tool.xml.parser;
+using iTextSharp.tool.xml.pipeline.css;
+using iTextSharp.tool.xml.pipeline.end;
+using iTextSharp.tool.xml.pipeline.html;
 using Model;
 using Newtonsoft.Json;
 using Services;
@@ -7,6 +14,7 @@ using Services.ServiceClient;
 using Services.ServiceReservation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -31,7 +39,6 @@ namespace Hotel.Controllers
 
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
         {
-
             List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
 
             if (d1 != null && d2 == null)
@@ -66,10 +73,13 @@ namespace Hotel.Controllers
 
             return View(_reserv);
         }
+
+
+
+
         [HttpGet]
         public ActionResult AddReservation()
         {
-
             WebClient n = new WebClient();
             var json = n.DownloadString("https://openexchangerates.org/api/currencies.json");
 
@@ -237,7 +247,108 @@ namespace Hotel.Controllers
         }
 
 
-        public JsonResult Detailres(int id)
+
+        public ActionResult Facture(int id)
+        {
+            Reservation resa = sr.Get(x => x.id == id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string html =
+
+                    "< body>< h1 > &nbsp; Erriadh Hotel Djerba </ h1 >< br />< br /><center class='justify - content - center' ><h2 > Facture N°" + resa.id +
+            "</ h2 ></ center >< br />< br /><p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Nom et Prénom: </ b >< span >" + resa.Clients.FirstOrDefault().nomC +
+            " </ span ></ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; N° Chambre: </ b >" + resa.chambre +
+            " </ p >< br /> < p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Type Chambre : </ b >" + resa.type +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Date du réservation: </ b > de " + resa.Arrivee.ToString("dd/MM/yyyy") + " à " + resa.dft.ToString("dd/MM/yyyy") +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Montant payé : </ b >" + resa.montant + " " + resa.devise +
+            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Payé " + (resa.methpaie == "Espece" ? " en" : "par") + " :</b>" + resa.methpaie +
+            "</ p >< br />< br /> <div class='pull-right'> <p style = 'font-size:20px' >< b > Djerba, le" + DateTime.Today.Date.ToString("dd/MM/yyyy") +
+            "</b></p> </div></body>";
+
+
+
+            //  var cssfiles =System.IO.File.ReadAllText(@"C:\Users\karim\source\repos\Hotel\Hotel\Content\code\bootstrap\css\bootstrap.min.css") +
+            //  System.IO.File.ReadAllText(@"C:\Users\karim\source\repos\Hotel\Hotel\Content\code\bootstrap\css\bootstrap-responsive.min.css");
+
+
+
+            //  Byte[] res = null;
+            //  using (var cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(cssfiles)))
+            //  {
+
+
+            //  using (MemoryStream ms = new MemoryStream())
+            //  {
+
+            //      StringReader reader = new StringReader(html);
+            //      Document PdfFile = new Document(PageSize.A4);
+            //      PdfWriter writer = PdfWriter.GetInstance(PdfFile, ms);
+
+            //      PdfFile.Open();
+            //      XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, ms,cssMemoryStream);
+
+            //      PdfFile.Close();
+            //      res = ms.ToArray();
+
+            //      return File(res, "application/pdf", "facture N°" + resa.id + ".pdf");
+            //     // return View(resa);
+            //  }
+
+            //}
+
+
+            List<string> cssFiles = new List<string>
+            {
+
+               "~/Content/code/bootstrap/css/bootstrap.min.css" ,
+                "~/Content/code/bootstrap/css/bootstrap-responsive.min.css"
+            };
+
+            MemoryStream output = new MemoryStream();
+
+            MemoryStream input = new MemoryStream(Encoding.UTF8.GetBytes(html));
+
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.GetInstance(document, output);
+            writer.CloseStream = false;
+
+            document.Open();
+            HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+            htmlContext.SetTagFactory(iTextSharp.tool.xml.html.Tags.GetHtmlTagProcessorFactory());
+
+            ICSSResolver cssResolver = XMLWorkerHelper.GetInstance().GetDefaultCssResolver(false);
+            cssFiles.ForEach(i => cssResolver.AddCssFile(System.Web.HttpContext.Current.Server.MapPath(i), true));
+
+            var pipeline = new CssResolverPipeline(cssResolver, new HtmlPipeline(htmlContext, new PdfWriterPipeline(document, writer)));
+            var worker = new XMLWorker(pipeline, true);
+            var p = new XMLParser(worker);
+            p.Parse(input);
+            document.Close();
+
+            return File(output.ToArray(), "application/pdf", "facture N°" + resa.id + ".pdf");
+
+
+            //return View(resa);
+        
+         }
+
+
+
+
+
+
+    public JsonResult Detailres(int id)
         {
             IserviceClient sc = new ServiceClient();
             IserviceReservation sd = new ServiceReservation();

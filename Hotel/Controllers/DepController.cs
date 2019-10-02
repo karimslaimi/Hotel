@@ -45,7 +45,7 @@ namespace Hotel.Controllers
         public ActionResult allDep()
         {
             ServiceDepenses sd = new ServiceDepenses();
-            List<Depenses> ld = sd.GetMany().ToList();
+            List<Depenses> ld = sd.GetMany().Reverse().ToList();
             return View(ld);
         }
         [CustomAuthorizeAttribute(Roles = "director")]

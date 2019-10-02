@@ -23,7 +23,20 @@
         Text = "Triple",
         Value = "Triple"
     });
+
+
+    List<SelectListItem> currItems = new List<SelectListItem>();
+
+    foreach (var item in ViewBag.currency)
+    {
+        currItems.Add(new SelectListItem
+        {
+            Text = item.Value,
+            Value = item.Key
+        });
+    }
 }
+
 
 <style>
     .sub-entry {
@@ -38,7 +51,7 @@
     }
 </style>
 
-@using (Html.BeginForm("AddReservation", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("AddReservation", "Employee", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
 
@@ -49,7 +62,7 @@
         <div class="control-group">
             <label class="control-label ">Chambre numéro </label>
             <div class="controls">
-                @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "span8" } })
+                @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "span8", min = 1, max = 26 } })
                 @Html.ValidationMessageFor(model => model.chambre, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -64,13 +77,7 @@
         </div>
 
 
-        <div class="control-group">
-            <label class="control-label ">Montant</label>
-            <div class="controls">
-                @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "span8" } })
-                @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
 
         <div class="control-group">
             <label class="control-label ">Numéro de réçu</label>
@@ -80,6 +87,50 @@
             </div>
         </div>
 
+
+        <div class="control-group">
+            <label class="control-label ">Montant</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Méthode de paiement</label>
+
+            <div class="controls">
+
+                @Html.RadioButtonFor(model => model.methpaie, "Espece", new { @checked = "true" }) Espece
+
+
+                @Html.RadioButtonFor(model => model.methpaie, "Cheque") Chèque
+
+
+                @Html.RadioButtonFor(model => model.methpaie, "Credit") Crédit
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Devise</label>
+            <div class="controls">
+                @Html.DropDownListFor(model => model.devise, currItems, "currItems", new { @class = "span8" }) <br />
+                @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Agence </label>
+            <div class="controls">
+                @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sub-entry">
         <div class="control-group">
             <label class="control-label ">Date d'arrivée</label>
             <div class="controls">
@@ -95,18 +146,8 @@
                 @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
-
-    <div class="sub-entry">
 
 
-        <div class="control-group">
-            <label class="control-label ">Agence </label>
-            <div class="controls">
-                @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "span8" } })
-                @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
 
         <div class="control-group">
@@ -137,13 +178,12 @@
             <div class="controls">
                 <input name="name2" type="text" class="span8" /> <span class="help-inline">S'il existe</span>
             </div>
-
         </div>
 
         <div class="control-group">
             <label class="control-label ">Nom Client 3</label>
             <div class="controls">
-                <input name="name1" type="text" class="span8" /><span class="help-inline">S'il existe</span>
+                <input name="name3" type="text" class="span8" /><span class="help-inline">S'il existe</span>
             </div>
         </div>
         <br /><br />
@@ -153,10 +193,8 @@
     <center>
         <button type="submit" class="btn btn-primary">Ajouter</button>
         <button href="@Url.Action("Reservations","Employee")" class="btn btn-warning">Annuler</button>
-
     </center>
+
 }
-
-
 
 

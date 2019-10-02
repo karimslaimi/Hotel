@@ -4,6 +4,7 @@ using Model;
 using Services;
 using Services.ServiceDepence;
 using Services.ServiceReservation;
+using Services.ServiceRevenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,12 @@ namespace Hotel.Controllers
             List<Depenses> _dep = sd.GetMany().Reverse().ToList();
             ViewData["lastdep"] = _dep;
 
+            IserviceRevenu srev = new ServiceRevenu();
+            List<Revenu> _rev = srev.GetMany().Reverse().ToList();
+
+
+
+
             //if (dt1 == null )
             //{
             //    DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
@@ -41,7 +48,7 @@ namespace Hotel.Controllers
             //ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Count();//nombre reservation
             //ViewBag.money = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Sum(w => w.montant);//total income
             //ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.Clients.Count()).Sum();
-            List<Revenu> reserva = sr.GetMany().GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+            List<Revenu> reserva = srev.GetMany().Reverse().GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
            
             if (dt1!=null && dt2 == null)//if start date not null and end date is null that means from dt1 until now
@@ -54,7 +61,7 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep >= dt1 ).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep >= dt1 ).Sum(l => l.montant);
 
-                ViewData["reserva"] = sr.GetMany(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+                ViewData["reserva"] = srev.GetMany(x => x.daterev >= dt1 && x.daterev <= DateTime.Now).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
 
@@ -72,7 +79,7 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep <= dt2).Sum(l => l.montant);
 
-                ViewData["reserva"] = sr.GetMany(x => x.Arrivee >= DateTime.Now.AddYears(-10) && x.Arrivee <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+                ViewData["reserva"] = srev.GetMany(x => x.daterev >= DateTime.Now.AddYears(-10) && x.daterev <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
 
@@ -90,7 +97,7 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep >= dt1 && x.datedep <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep >= dt1 && x.datedep <= dt2).Sum(l => l.montant);
 
-                ViewData["reserva"] = sr.GetMany(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+                ViewData["reserva"] = srev.GetMany(x => x.daterev >= dt1 && x.daterev <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
 
@@ -103,14 +110,14 @@ namespace Hotel.Controllers
                 //DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
                 //DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
                 ViewBag.reservsem = _res.Where(x=>x.Arrivee.Month==DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Count();//nombre reservation
-                ViewBag.money = _res.Where(x=>x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Sum(w => w.montant);//total income
+                ViewBag.money = _dep.Where(x=>x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(w => w.montant);//total income
                 ViewBag.client = _res.Where(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Select(l => l.Clients.Count()).Sum();
 
-                ViewBag.credit = _res.Where(x => x.methpaie == "Eredit" && x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Sum(l => l.montant);
-                ViewBag.cheque = _res.Where(x => x.methpaie == "Eheque" && x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Sum(l => l.montant);
-                ViewBag.espece = _res.Where(x => x.methpaie == "Espece" && x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Sum(l => l.montant);
+                ViewBag.credit = _dep.Where(x => x.pmethod == "Credit" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
+                ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
+                ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
 
-                ViewData["reserva"] = sr.GetMany(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+                ViewData["reserva"] = srev.GetMany(x => x.daterev.Month == DateTime.Now.Month && x.daterev.Year == DateTime.Now.Year).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
 
