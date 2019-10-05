@@ -37,6 +37,11 @@ namespace Hotel.Models
         [Required]
         public string devise { get; set; }
 
+
+        public float montantpn { get; set; }
+
+        public string nbnuit { get; set; }
+
         public ICollection<Client> Clients { get; set; }
 
 

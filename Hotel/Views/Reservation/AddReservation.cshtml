@@ -27,7 +27,7 @@
 
     List<SelectListItem> currItems = new List<SelectListItem>();
 
-    foreach(var item in ViewBag.currency)
+    foreach (var item in ViewBag.currency)
     {
         currItems.Add(new SelectListItem
         {
@@ -55,145 +55,159 @@
 {
     @Html.AntiForgeryToken()
 
-        <h4>Ajouter une réservation</h4>
-        <hr />
-        <div class="sub-entry">
-            @Html.ValidationSummary(true, "", new { @class = "alert alert-error" })
-            <div class="control-group">
-                <label class="control-label ">Chambre numéro </label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "span8", min = 1, max = 26 } })
-                    @Html.ValidationMessageFor(model => model.chambre, "", new { @class = "text-danger" })
-                </div>
+    <h4>Ajouter une réservation</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-error" })
+    <div class="sub-entry">
+
+        <div class="control-group">
+            <label class="control-label ">Chambre numéro </label>
+            <div class="controls">
+                @Html.EditorFor(model => model.chambre, new { htmlAttributes = new { @class = "span8", min = 1, max = 26 } })
+                @Html.ValidationMessageFor(model => model.chambre, "", new { @class = "text-danger" })
             </div>
-
-
-            <div class="control-group">
-                <label class="control-label ">Type chambre </label>
-                <div class="controls">
-                    @Html.DropDownListFor(model => model.type, listItems, "Sélectionner", new { @class = "span8" })
-                    @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-
-
-            <div class="control-group">
-                <label class="control-label ">Numéro de réçu</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.bons, new { htmlAttributes = new { @class = "span8" } })
-                    @Html.ValidationMessageFor(model => model.bons, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="control-group">
-                <label class="control-label ">Montant</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "span8" } })
-                    @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Méthode de paiement</label>
-
-                <div class="controls">
-
-                    @Html.RadioButtonFor(model => model.methpaie, "Espece",new { @checked = "true" }) Espece
-
-
-                    @Html.RadioButtonFor(model => model.methpaie, "Cheque") Chèque
-
-
-                    @Html.RadioButtonFor(model => model.methpaie, "Credit") Crédit
-
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Devise</label>
-                <div class="controls">
-                    @Html.DropDownListFor(model => model.devise,currItems, "currItems", new { @class = "span8" }) <br />
-                    @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Agence </label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "span8" } })
-                    @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
         </div>
 
-        <div class="sub-entry">
-            <div class="control-group">
-                <label class="control-label ">Date d'arrivée</label>
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Arrivee, new { @type = "date", @class = "span8 datepicker" })
-                    @Html.ValidationMessageFor(model => model.Arrivee, "", new { @class = "text-danger" })
-                </div>
+
+        <div class="control-group">
+            <label class="control-label ">Type chambre </label>
+            <div class="controls">
+                @Html.DropDownListFor(model => model.type, listItems, "Sélectionner", new { @class = "span8" })
+                @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
             </div>
-
-            <div class="control-group">
-                <label class="control-label ">Dft</label>
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.dft, new { @type = "date", @class = "span8 datepicker" })
-                    @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        
-
-
-            <div class="control-group">
-                <label class="control-label ">Nationnalité</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.nat, new { htmlAttributes = new { @class = "span8" } })
-                    @Html.ValidationMessageFor(model => model.nat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Nombre de personne</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "span8" } })
-                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Nom Client</label>
-                <div class="controls">
-                    <input name="name1" type="text" class="span8" />
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Nom Client 2</label>
-                <div class="controls">
-                    <input name="name2" type="text" class="span8" /> <span class="help-inline">S'il existe</span>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label ">Nom Client 3</label>
-                <div class="controls">
-                    <input name="name3" type="text" class="span8" /><span class="help-inline">S'il existe</span>
-                </div>
-            </div>
-            <br /><br />
         </div>
 
-   
-        <center>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-            <button href="@Url.Action("Reservations","Reservation")" class="btn btn-warning">Annuler</button>
-        </center>
+
+
+
+        <div class="control-group">
+            <label class="control-label ">Numéro de réçu</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.bons, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.bons, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Montant Par nuit</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.montantpn, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.montantpn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Montant Total</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.montant, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.montant, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Méthode de paiement</label>
+
+            <div class="controls">
+
+                @Html.RadioButtonFor(model => model.methpaie, "Espece", new { @checked = "true" }) Espece
+
+
+                @Html.RadioButtonFor(model => model.methpaie, "Cheque") Chèque
+
+
+                @Html.RadioButtonFor(model => model.methpaie, "Credit") Crédit
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Devise</label>
+            <div class="controls">
+                @Html.DropDownListFor(model => model.devise, currItems, "currItems", new { @class = "span8" }) <br />
+                @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Agence </label>
+            <div class="controls">
+                @Html.EditorFor(model => model.agence, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.agence, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sub-entry">
+        <div class="control-group">
+            <label class="control-label ">Date d'arrivée</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Arrivee, new { @type = "date", @class = "span8 datepicker" })
+                @Html.ValidationMessageFor(model => model.Arrivee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Dft</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.dft, new { @type = "date", @class = "span8 datepicker" })
+                @Html.ValidationMessageFor(model => model.dft, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label ">Nombre de nuit </label>
+            <div class="controls">
+                @Html.EditorFor(model => model.nbnuit, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.nbnuit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Nationnalité</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.nat, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.nat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Nombre de personne</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "span8" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Nom Client</label>
+            <div class="controls">
+                <input name="name1" type="text" class="span8" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Nom Client 2</label>
+            <div class="controls">
+                <input name="name2" type="text" class="span8" /> <span class="help-inline">S'il existe</span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label ">Nom Client 3</label>
+            <div class="controls">
+                <input name="name3" type="text" class="span8" /><span class="help-inline">S'il existe</span>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+
+
+    <center>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <button href="@Url.Action("Reservations","Reservation")" class="btn btn-warning">Annuler</button>
+    </center>
 
 }
 

@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,37 +52,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabContext.cs" />
-    <Compile Include="Migrations\201909061642400_initial.cs" />
-    <Compile Include="Migrations\201909061642400_initial.Designer.cs">
-      <DependentUpon>201909061642400_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201910051507599_initial.cs" />
+    <Compile Include="Migrations\201910051507599_initial.Designer.cs">
+      <DependentUpon>201910051507599_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909111523240_mg1.cs" />
-    <Compile Include="Migrations\201909111523240_mg1.Designer.cs">
-      <DependentUpon>201909111523240_mg1.cs</DependentUpon>
+    <Compile Include="Migrations\201910051509397_nbnuit.cs" />
+    <Compile Include="Migrations\201910051509397_nbnuit.Designer.cs">
+      <DependentUpon>201910051509397_nbnuit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909211333414_mjadded.cs" />
-    <Compile Include="Migrations\201909211333414_mjadded.Designer.cs">
-      <DependentUpon>201909211333414_mjadded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909211709386_data annotation.cs" />
-    <Compile Include="Migrations\201909211709386_data annotation.Designer.cs">
-      <DependentUpon>201909211709386_data annotation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909211713021_data annot.cs" />
-    <Compile Include="Migrations\201909211713021_data annot.Designer.cs">
-      <DependentUpon>201909211713021_data annot.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909281326522_model changing.cs" />
-    <Compile Include="Migrations\201909281326522_model changing.Designer.cs">
-      <DependentUpon>201909281326522_model changing.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909292155079_revn.cs" />
-    <Compile Include="Migrations\201909292155079_revn.Designer.cs">
-      <DependentUpon>201909292155079_revn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909292325256_revenu.cs" />
-    <Compile Include="Migrations\201909292325256_revenu.Designer.cs">
-      <DependentUpon>201909292325256_revenu.cs</DependentUpon>
+    <Compile Include="Migrations\201910051512075_nbnuit1.cs" />
+    <Compile Include="Migrations\201910051512075_nbnuit1.Designer.cs">
+      <DependentUpon>201910051512075_nbnuit1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,29 +78,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909061642400_initial.resx">
-      <DependentUpon>201909061642400_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910051507599_initial.resx">
+      <DependentUpon>201910051507599_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111523240_mg1.resx">
-      <DependentUpon>201909111523240_mg1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910051509397_nbnuit.resx">
+      <DependentUpon>201910051509397_nbnuit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909211333414_mjadded.resx">
-      <DependentUpon>201909211333414_mjadded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909211709386_data annotation.resx">
-      <DependentUpon>201909211709386_data annotation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909211713021_data annot.resx">
-      <DependentUpon>201909211713021_data annot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909281326522_model changing.resx">
-      <DependentUpon>201909281326522_model changing.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909292155079_revn.resx">
-      <DependentUpon>201909292155079_revn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909292325256_revenu.resx">
-      <DependentUpon>201909292325256_revenu.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910051512075_nbnuit1.resx">
+      <DependentUpon>201910051512075_nbnuit1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

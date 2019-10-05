@@ -232,6 +232,8 @@ namespace Hotel.Controllers
                 methpaie = s.methpaie,
                 devise=s.devise,
                 comfirmed=s.comfirmed,
+                montatnpn=s.montantpn,
+                nbnuit=s.nbnuit,
                 Clients = s.Clients.Select(g => new { nomC=g.nomC})
 
             });

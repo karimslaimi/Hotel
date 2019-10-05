@@ -3,9 +3,7 @@
 @{
     Layout = "~/Views/Shared/template.cshtml";
 }
-@{
-    var idd = 1;
-}
+
 <h2 class="align-center">Dépenses</h2>
 <a href="@Url.Action("addDep","Dep")" class="btn btn-primary pull-right ">Ajouter une dépense</a>
 <br /><br />
@@ -89,7 +87,8 @@ Montant
                 success: function (data) {
                     console.log(data);
 
-                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant  + "&nbsp;dt<br/><b>Description</b> : " + data.description+ "<br/><b>Méthode de paiement</b> : "+data.pmethod;
+                    var text = "<b>Motif</b> : " + data.motif + "<br/><b>Montant</b> : " + data.montant + "&nbsp;dt<br/><b>Description</b> : " + data.description + "<br/><b>Méthode de paiement</b> : "
+                        + data.pmethod + "<br/><b>Date</b> : " + data.datedep;
 
                     $('#content').html(text);
 
