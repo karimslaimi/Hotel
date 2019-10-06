@@ -148,6 +148,7 @@
 
 
                 <div id="content"></div>
+                <center><input type="text" name="tva" id="tva" placeholder="14.00" class="control-label span2"></center> 
                 <br />
             </div>
 
@@ -235,10 +236,8 @@
                         '<div class="control-group"><label class="control-label "><b>Nom Client 2</b></label><div class="controls">' + c2 + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div></div>' +
-                        
-                        '<center><a class="btn btn-primary" href="/Reservation/Facture/'+idres+'">Facture<a/></center'
-                        ;
 
+                        '<center><a class="btn btn-primary" id="facture" onclick="red('+idres+')" >Facture<a/></center><br/>';
                     $('#content').html(text);
 
                 }
@@ -248,6 +247,14 @@
 
     });
 
+    function red(idres) {
+
+           window.location.href = "/Reservation/Facture/?id= " + idres + "&tva=" + $('#exampleModal #tva').val();
+        
+        }
+       
+        
+   
 
     function ToJavaScriptDate(value) {
         var pattern = /Date\(([^)]+)\)/;

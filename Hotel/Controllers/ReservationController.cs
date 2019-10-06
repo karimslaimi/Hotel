@@ -261,11 +261,11 @@ namespace Hotel.Controllers
             return flag; 
         }
 
-        public ActionResult Facture(int id)
+        public ActionResult Facture(int id,string tva)
         {
             Reservation resa = sr.Get(x=>x.id==id);
 
-
+          
 
 
 

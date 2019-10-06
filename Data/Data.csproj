@@ -52,13 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabContext.cs" />
-    <Compile Include="Migrations\201910051738124_nbnuit.cs" />
-    <Compile Include="Migrations\201910051738124_nbnuit.Designer.cs">
-      <DependentUpon>201910051738124_nbnuit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910051739593_nbn.cs" />
-    <Compile Include="Migrations\201910051739593_nbn.Designer.cs">
-      <DependentUpon>201910051739593_nbn.cs</DependentUpon>
+    <Compile Include="Migrations\201910061642132_mg.cs" />
+    <Compile Include="Migrations\201910061642132_mg.Designer.cs">
+      <DependentUpon>201910061642132_mg.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,11 +70,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910051738124_nbnuit.resx">
-      <DependentUpon>201910051738124_nbnuit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910051739593_nbn.resx">
-      <DependentUpon>201910051739593_nbn.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910061642132_mg.resx">
+      <DependentUpon>201910061642132_mg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
