@@ -46,13 +46,25 @@ namespace Hotel.Controllers
         {
             ServiceDepenses sd = new ServiceDepenses();
             List<Depenses> ld = sd.GetMany().Reverse().ToList();
+           
             return View(ld);
         }
         [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
-        public ActionResult allDep(Depenses dep)
+        public ActionResult allDep(DateTime? d1, DateTime? d2)
         {
-            return View();
+            ServiceDepenses sd = new ServiceDepenses();
+            List<Depenses> ld = sd.GetMany().Reverse().ToList();
+            if (d1 != null)
+            {
+                ld = ld.Where(x => x.datedep >= d1).ToList();
+            }
+            if (d2 != null)
+            {
+                ld = ld.Where(x => x.datedep <= d2).ToList();
+            }
+
+            return View(ld);
         }
         [CustomAuthorizeAttribute(Roles = "director")]
         public PartialViewResult Details(int id)

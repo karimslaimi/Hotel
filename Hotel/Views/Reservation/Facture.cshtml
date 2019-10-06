@@ -9,26 +9,51 @@
     <link type="text/css" href="~/Content/code/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>&nbsp;Erriadh Hotel Djerba</h1>
+    <div class="row">
+        <div class="span8">
+            <h1>&nbsp;HOTEL DJERBA ERRIADH</h1>
+        </div>
+        <div class="span6">
+            <h1 class="pull-right" style="opacity:0.4">FACTURE</h1>    <br /><br />
+        </div>
+    </div>
+
     <br /><br />
-    <center class="justify-content-center">
-        <h2>Facture N°@Model.id</h2>
-    </center>
+    <div class="row">
+        <div class="span8" style="margin-left:50px">
+            <span ><b>Rue Mohamed el ferjeni houmet essouk, djerba tunisie<br />DJERBA 4180<br />Tel : 00216 75 65 07 50 Fax : 00216 75 65 16 91<br />Email : hotel.erriadh@Topnet.tn</b></span>        </div>
+        <div class="span6">
+            <span class="pull-right" style="font-size:16px"><b>FACTURE : </b>&nbsp;&nbsp;&nbsp;@Model.id<br /><b>DATE :</b> &nbsp;&nbsp;&nbsp;@DateTime.Today.Date.ToString("dd/MM/yyyy")</span>    <br /><br />
+        </div>
+    </div>
+    <br /><br /><br />
+    <div style="margin-left:20px">
+        <h3>FACTURE </h3>
+    </div>
     <br /><br />
 
-          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom : </b><span>@Model.Clients.FirstOrDefault().nomC</span></p>
+          <table class='table table-striped' style='border:solid 2px'>
+              <tr >
+                  
+                  <th>Description</th>
+                  <th style='width:500px'>Montant</th>
+              </tr>
+              <tr style='height:400px'>
+                  <td style='border:solid 1px'>Chambre @Model.type de @Model.Arrivee.ToString('dd/MM/yyyy') au @Model.dft.ToString('dd/MM/yyyy')</td>
+              <td style='border:solid 1px'>@Model.montantpn</td>
+              </tr>
+              <tr>
+                  <td style='border:solid 1px'>TVA </td>
+                  <td style='border:solid 1px'>14.00</td>
+              </tr>
+              <tr>
+                  <td class='pull-right' >TOTAL</td>
+                  <td style='border:solid 1px'>@Model.montant</td>
+
+              </tr>
+          </table>
     <br />
-          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;N° Chambre : </b> @Model.chambre</p>
-    <br />     
-    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Type Chambre : </b>@Model.type</p>
-    <br />     
-    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Date du réservation : </b>de @Model.Arrivee.ToString("dd/MM/yyyy") à @Model.dft.ToString("dd/MM/yyyy")</p>
-    <br />
-          <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Montant payé : </b>@Model.montant</p>
-    <br />      
-    <p style="font-size:20px"><b>&nbsp;&nbsp;&nbsp;&nbsp;Payé @(@Model.methpaie == "Espece" ? " en" : "par") : </b>@Model.methpaie  </p>
-    <br /><br />
-    <div class="span8 " style="margin-left:1000px">
-        <p style="font-size:20px"><b>Djerba, le @DateTime.Today.Date.ToString("dd/MM/yyyy")</b></p>
-    </div>
+          <center>
+              <h2>MERCI DE VOTRE CONFIANCE !</h2>
+          </center>
 </body>

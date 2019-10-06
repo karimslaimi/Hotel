@@ -269,6 +269,7 @@ namespace Hotel.Controllers
 
 
 
+           // return View(resa);
 
 
 
@@ -276,18 +277,21 @@ namespace Hotel.Controllers
 
 
 
+            string html = "< body >< div class='row'> <div class='span6'>  <h3>&nbsp;HOTEL DJERBA ERRIADH</h3> </div>" +
+                         " <div class='span2'>  <h3 class='pull-right' style='opacity:0.4'>FACTURE</h3> <br /><br /></div></div>" +
+                         "<br /><br />< div class='row'><div class='span6' style='margin-left:50px'>" +
+                         "<span ><b>Rue Mohamed el ferjeni houmet essouk, djerba tunisie<br /> DJERBA 4180<br />" +
+                         "Tel : 00216 75 65 07 50 Fax : 00216 75 65 16 91<br />Email : hotel.erriadh @Topnet.tn</b></span>        </div>" +
+                         "<div class='span2'><span class='pull-right' style='font-size:14px'><b>FACTURE : </b>&nbsp;&nbsp;&nbsp;"+resa.id+"<br /><b>DATE :</b> &nbsp;&nbsp;&nbsp;"+
+                         DateTime.Today.Date.ToString("dd/MM/yyyy")+"</span><br /><br />" +
+                         "</div></div><br /><div  >< h3 > FACTURE </ h3 ></ div >< br />< br /> " +
+                         "<table class='table table-striped' style='border:solid 2px'><tr  ><th style='color:grey'>Description</th><th style = 'width:500px;color:grey;' > Montant </ th ></ tr >" +
+                         "< tr style='height:400px'><td style = 'border:solid 2px' > Chambre "+resa.type+" de "+ resa.Arrivee.ToString("dd/MM/yyyy")+" au "+resa.dft.ToString("dd/MM/yyyy")+"</td>" +
+                         "<td style = 'border:solid 2px' >"+ resa.montantpn+" "+resa.devise +"</ td ></ tr >< tr >< td >TVA</td><td > 14.00 </ td ></ tr >" +
+                         "< tr >< td class='pull-right' >TOTAL</td><td  >"+ resa.montant+14 +" "+resa.devise+"</ td ></ tr ></ table >< br />< center >< h3 > MERCI DE VOTRE CONFIANCE !</h3>" +
+                         "</center></body>";
 
-            string html=
 
-                    "< body>< h1 > &nbsp; Erriadh Hotel Djerba </ h1 >< br />< br /><center class='justify - content - center' ><h2 > Facture N°" + resa.id +
-            "</ h2 ></ center >< br />< br /><p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Nom et Prénom: </ b >< span >" + resa.Clients.FirstOrDefault().nomC +
-            " </ span ></ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; N° Chambre: </ b >" + resa.chambre +
-            " </ p >< br /> < p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Type Chambre : </ b >" + resa.type +
-            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Date du réservation: </ b > de " + resa.Arrivee.ToString("dd/MM/yyyy") + " à " + resa.dft.ToString("dd/MM/yyyy") +
-            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Montant payé : </ b >" + resa.montant + " " + resa.devise +
-            "</ p >< br />< p style = 'font-size:20px' >< b > &nbsp; &nbsp; &nbsp; &nbsp; Payé " + (resa.methpaie == "Espece" ? " en" : "par") + " :</b>" + resa.methpaie +
-            "</ p >< br />< br /> <div class='pull-right'> <p style = 'font-size:20px' >< b > Djerba, le" + DateTime.Today.Date.ToString("dd/MM/yyyy") +
-            "</b></p> </div></body>";
 
 
 
@@ -347,12 +351,13 @@ namespace Hotel.Controllers
             var worker = new XMLWorker(pipeline, true);
             var p = new XMLParser(worker);
             p.Parse(input);
+           // XMLWorkerHelper.GetInstance().ParseXHtml(writer,document, new StreamReader(html));
             document.Close();
 
              return File(output.ToArray(), "application/pdf", "facture N°" + resa.id + ".pdf");
 
 
-            //return View(resa);
+            
         }
     }
 
