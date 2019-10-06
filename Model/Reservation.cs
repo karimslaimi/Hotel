@@ -40,7 +40,7 @@ namespace Hotel.Models
 
         public float montantpn { get; set; }
 
-        public string nbnuit { get; set; }
+        public int nbnuit { get; set; }
 
         public ICollection<Client> Clients { get; set; }
 
