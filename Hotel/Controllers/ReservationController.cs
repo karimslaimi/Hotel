@@ -38,7 +38,7 @@ namespace Hotel.Controllers
 
 
 
-        [CustomAuthorizeAttribute(Roles = "director")]
+ 
         public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw,int? num)
         {
             List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
@@ -75,14 +75,10 @@ namespace Hotel.Controllers
 
             return View(_reserv);
         }
-        /*("select e from Logement e , Contrat c where (e.idLog=c.logement and (:d1 not between c.dateDeb and c.dateFin) and (:d2 not between c.dateDeb and c.dateFin) and "
-			+ "(c.dateDeb not between :d1 and :d2) and (c.dateFin not between :d1 and :d2)) "
-			+ "or (e.idLog not in (select a.logement from Contrat a))")*/
+        
 
 
 
-
-        [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult AddReservation()
         {
@@ -102,7 +98,6 @@ namespace Hotel.Controllers
 
 
 
-        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult AddReservation(Reservation res,string name1,string name2,string name3)
         {
 
@@ -188,8 +183,6 @@ namespace Hotel.Controllers
 
 
 
-
-        [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Delete(int id)
         {
 
@@ -215,7 +208,6 @@ namespace Hotel.Controllers
 
 
 
-        [CustomAuthorizeAttribute(Roles = "director")]
         public JsonResult Detailres(int id)
         {
             IserviceClient sc = new ServiceClient();

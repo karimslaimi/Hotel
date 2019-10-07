@@ -23,11 +23,11 @@
 
 <h2 class="align-center">Réservations</h2>
 
-<a href="@Url.Action("AddReservation","Employee")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
+<a href="@Url.Action("AddReservation","Reservation")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
 
 <br />
 <hr />
-@using (Html.BeginForm("Reservations", "Employee", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Reservations", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {<div class="span3 ">
 
         <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
@@ -108,7 +108,7 @@
             {
 
                 <td>
-                    <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Employee",new { id = item.id })">Confirmée</a>
+                    <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Reservation",new { id = item.id })">Confirmée</a>
                 </td>
             }
             else
@@ -148,6 +148,7 @@
 
 
                 <div id="content"></div>
+                <center><input type="text" name="tva" id="tva" placeholder="14.00" class="control-label span2"></center>
                 <br />
             </div>
 
@@ -183,7 +184,7 @@
             var idres = $(this).data('id');
             console.log(idres);
             $.ajax({
-                url: "/Employee/Detailres/" + idres,
+                url: "/Reservation/Detailres/" + idres,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function (data) {
@@ -207,9 +208,9 @@
 
                         '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +
 
-                        '<div class="control-group"><label class="control-label "><b>Montant</b></label><div class="controls">' + data.montant + '</div></div>' +
+                        '<div class="control-group"><label class="control-label "><b>Montant Total</b></label><div class="controls">' + data.montant + '</div></div>' +
 
-
+                        '<div class="control-group"><label class="control-label "><b>Montant Par nuit</b></label><div class="controls">' + data.montantpn + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>Methode de paiement</b> </label><div class="controls">' + data.methpaie + '</div></div>' +
 
@@ -223,7 +224,7 @@
 
                         '<div class="control-group"><label class="control-label "><b>Check-out</b></label><div class="controls">' + ToJavaScriptDate(data.dft) + '</div></div >' +
 
-
+                        '<div class="control-group"><label class="control-label "><b>Nombre de nuit</b></label><div class="controls">' + data.nbnuit + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>Nationnalité</b></label><div class="controls">' + data.nat + '</div> </div>' +
 
@@ -236,9 +237,7 @@
 
                         '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div></div>' +
 
-                        '<center><a class="btn btn-primary" href="/Employee/Facture/' + idres + '">Facture<a/></center'
-                        ;
-
+                        '<center><a class="btn btn-primary" id="facture" onclick="red(' + idres + ')" >Facture<a/></center><br/>';
                     $('#content').html(text);
 
                 }
@@ -247,6 +246,14 @@
 
 
     });
+
+    function red(idres) {
+
+        window.location.href = "/Reservation/Facture/?id= " + idres + "&tva=" + $('#exampleModal #tva').val();
+
+    }
+
+
 
 
     function ToJavaScriptDate(value) {
@@ -259,6 +266,5 @@
 
 
 </script>
-
 
 
