@@ -52,9 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabContext.cs" />
-    <Compile Include="Migrations\201910061642132_mg.cs" />
-    <Compile Include="Migrations\201910061642132_mg.Designer.cs">
-      <DependentUpon>201910061642132_mg.cs</DependentUpon>
+    <Compile Include="Migrations\201910071727203_mg1.cs" />
+    <Compile Include="Migrations\201910071727203_mg1.Designer.cs">
+      <DependentUpon>201910071727203_mg1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910071828350_mg2.cs" />
+    <Compile Include="Migrations\201910071828350_mg2.Designer.cs">
+      <DependentUpon>201910071828350_mg2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +74,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910061642132_mg.resx">
-      <DependentUpon>201910061642132_mg.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910071727203_mg1.resx">
+      <DependentUpon>201910071727203_mg1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910071828350_mg2.resx">
+      <DependentUpon>201910071828350_mg2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

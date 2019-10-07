@@ -192,6 +192,8 @@ namespace Hotel.Controllers
         [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Delete(int id)
         {
+
+
             sr.Delete(x => x.id == id);
             sr.Commit();
             return RedirectToAction("Reservations");
@@ -232,7 +234,7 @@ namespace Hotel.Controllers
                 methpaie = s.methpaie,
                 devise=s.devise,
                 comfirmed=s.comfirmed,
-                montatnpn=s.montantpn,
+                montantpn=s.montantpn,
                 nbnuit=s.nbnuit,
                 Clients = s.Clients.Select(g => new { nomC=g.nomC})
 
@@ -280,7 +282,7 @@ namespace Hotel.Controllers
 
 
 
-            string html = "< body >< div class='row'> <div class='span6'>  <h3>&nbsp;HOTEL DJERBA ERRIADH</h3> </div>" +
+            string html = "<body><div class='row'> <div class='span6'><h3>&nbsp;HOTEL DJERBA ERRIADH</h3></div>" +
                          " <div class='span2'>  <h3 class='pull-right' style='opacity:0.4'>FACTURE</h3> <br /><br /></div></div>" +
                          "<br /><br />< div class='row'><div class='span6' style='margin-left:50px'>" +
                          "<span ><b>Rue Mohamed el ferjeni houmet essouk, djerba tunisie<br /> DJERBA 4180<br />" +
@@ -290,7 +292,7 @@ namespace Hotel.Controllers
                          "</div></div><br /><div  >< h3 > FACTURE </ h3 ></ div >< br />< br /> " +
                          "<table class='table table-striped' style='border:solid 2px'><tr  ><th style='color:grey'>Description</th><th style = 'width:500px;color:grey;' > Montant </ th ></ tr >" +
                          "< tr style='height:400px'><td style = 'border:solid 2px' > Chambre "+resa.type+" de "+ resa.Arrivee.ToString("dd/MM/yyyy")+" au "+resa.dft.ToString("dd/MM/yyyy")+"</td>" +
-                         "<td style = 'border:solid 2px' >"+ resa.montantpn+" "+resa.devise +"</ td ></ tr >< tr >< td >TVA</td><td > 14.00 </ td ></ tr >" +
+                         "<td style = 'border:solid 2px' >"+ resa.montantpn+" "+resa.devise +"</ td ></ tr >< tr >< td >TVA</td><td >"+tv+ "%</ td ></ tr >" +
                          "< tr >< td class='pull-right' >TOTAL</td><td  >"+ resa.montant*(tv/100+1)+" "+resa.devise+"</ td ></ tr ></ table >< br />< center >< h3 > MERCI DE VOTRE CONFIANCE !</h3>" +
                          "</center></body>";
 

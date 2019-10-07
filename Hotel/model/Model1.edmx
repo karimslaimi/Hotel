@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="idc" />
+          </Key>
+          <Property Name="idc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomC" Type="nvarchar(max)" />
+          <Property Name="idr" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Depenses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="motif" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="montant" Type="real" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="pmethod" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="datedep" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="chambre" Type="int" Nullable="false" />
+          <Property Name="agence" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Arrivee" Type="datetime" Nullable="false" />
+          <Property Name="nat" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="nombre" Type="int" Nullable="false" />
+          <Property Name="montant" Type="real" Nullable="false" />
+          <Property Name="bons" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dft" Type="datetime" Nullable="false" />
+          <Property Name="type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="methpaie" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="comfirmed" Type="bit" Nullable="false" />
+          <Property Name="devise" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="montantpn" Type="real" Nullable="false" />
+          <Property Name="nbnuit" Type="int" />
+        </EntityType>
+        <EntityType Name="Revenus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="devise" Type="nvarchar(max)" />
+          <Property Name="montant" Type="real" Nullable="false" />
+          <Property Name="type" Type="nvarchar(max)" />
+          <Property Name="daterev" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="mail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="type" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Clients_dbo_Reservations_idr">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="idr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Revenus_dbo_Reservations_id">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+          <End Role="Revenus" Type="Self.Revenus" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Revenus">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Depenses" EntityType="Self.Depenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Revenus" EntityType="Self.Revenus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Clients_dbo_Reservations_idr" Association="Self.FK_dbo_Clients_dbo_Reservations_idr">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Revenus_dbo_Reservations_id" Association="Self.FK_dbo_Revenus_dbo_Reservations_id">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Revenus" EntitySet="Revenus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="idc" />
+          </Key>
+          <Property Name="idc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idr" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_dbo_Clients_dbo_Reservations_idr" FromRole="Clients" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Depenses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="motif" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="montant" Type="Single" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pmethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="datedep" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="chambre" Type="Int32" Nullable="false" />
+          <Property Name="agence" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Arrivee" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre" Type="Int32" Nullable="false" />
+          <Property Name="montant" Type="Single" Nullable="false" />
+          <Property Name="bons" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dft" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="methpaie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="comfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="devise" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="montantpn" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_dbo_Clients_dbo_Reservations_idr" FromRole="Reservations" ToRole="Clients" />
+          <NavigationProperty Name="Revenus" Relationship="Self.FK_dbo_Revenus_dbo_Reservations_id" FromRole="Reservations" ToRole="Revenus" />
+        </EntityType>
+        <EntityType Name="Revenus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="devise" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="montant" Type="Single" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="daterev" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_dbo_Revenus_dbo_Reservations_id" FromRole="Revenus" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_Clients_dbo_Reservations_idr">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="idr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Revenus_dbo_Reservations_id">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+          <End Role="Revenus" Type="Self.Revenus" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Revenus">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Depenses" EntityType="Self.Depenses" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" />
+          <EntitySet Name="Revenus" EntityType="Self.Revenus" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_dbo_Clients_dbo_Reservations_idr" Association="Self.FK_dbo_Clients_dbo_Reservations_idr">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Revenus_dbo_Reservations_id" Association="Self.FK_dbo_Revenus_dbo_Reservations_id">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Revenus" EntitySet="Revenus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HotelModelStoreContainer" CdmEntityContainer="HotelEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="HotelModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="HotelModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="idc" ColumnName="idc" />
+                <ScalarProperty Name="nomC" ColumnName="nomC" />
+                <ScalarProperty Name="idr" ColumnName="idr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depenses">
+            <EntityTypeMapping TypeName="HotelModel.Depenses">
+              <MappingFragment StoreEntitySet="Depenses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="motif" ColumnName="motif" />
+                <ScalarProperty Name="montant" ColumnName="montant" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="pmethod" ColumnName="pmethod" />
+                <ScalarProperty Name="datedep" ColumnName="datedep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="HotelModel.Reservations">
+              <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="chambre" ColumnName="chambre" />
+                <ScalarProperty Name="agence" ColumnName="agence" />
+                <ScalarProperty Name="Arrivee" ColumnName="Arrivee" />
+                <ScalarProperty Name="nat" ColumnName="nat" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="montant" ColumnName="montant" />
+                <ScalarProperty Name="bons" ColumnName="bons" />
+                <ScalarProperty Name="dft" ColumnName="dft" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="methpaie" ColumnName="methpaie" />
+                <ScalarProperty Name="comfirmed" ColumnName="comfirmed" />
+                <ScalarProperty Name="devise" ColumnName="devise" />
+                <ScalarProperty Name="montantpn" ColumnName="montantpn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revenus">
+            <EntityTypeMapping TypeName="HotelModel.Revenus">
+              <MappingFragment StoreEntitySet="Revenus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="devise" ColumnName="devise" />
+                <ScalarProperty Name="montant" ColumnName="montant" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="daterev" ColumnName="daterev" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HotelModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -15,6 +15,7 @@ namespace Data.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+
         }
 
         protected override void Seed(Hotel.Data.DatabContext context)

@@ -15,7 +15,17 @@ namespace Hotel.Data
 
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            
 
+            modelBuilder.Entity<Reservation>()
+              .HasOptional(x => x.revenu)
+              .WithRequired(x => x.reservation)
+              .WillCascadeOnDelete(true);
+
+
+        }
         public DbSet<Depenses> Depenses { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
