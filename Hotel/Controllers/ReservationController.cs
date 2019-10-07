@@ -264,9 +264,12 @@ namespace Hotel.Controllers
         public ActionResult Facture(int id,string tva)
         {
             Reservation resa = sr.Get(x=>x.id==id);
+            float tv=14;
 
-          
-
+            if (tva != null && !string.IsNullOrEmpty(tva)) {
+               
+                if(!float.TryParse(tva,out tv)) { tv = 14; }
+            }
 
 
            // return View(resa);
@@ -288,7 +291,7 @@ namespace Hotel.Controllers
                          "<table class='table table-striped' style='border:solid 2px'><tr  ><th style='color:grey'>Description</th><th style = 'width:500px;color:grey;' > Montant </ th ></ tr >" +
                          "< tr style='height:400px'><td style = 'border:solid 2px' > Chambre "+resa.type+" de "+ resa.Arrivee.ToString("dd/MM/yyyy")+" au "+resa.dft.ToString("dd/MM/yyyy")+"</td>" +
                          "<td style = 'border:solid 2px' >"+ resa.montantpn+" "+resa.devise +"</ td ></ tr >< tr >< td >TVA</td><td > 14.00 </ td ></ tr >" +
-                         "< tr >< td class='pull-right' >TOTAL</td><td  >"+ resa.montant+14 +" "+resa.devise+"</ td ></ tr ></ table >< br />< center >< h3 > MERCI DE VOTRE CONFIANCE !</h3>" +
+                         "< tr >< td class='pull-right' >TOTAL</td><td  >"+ resa.montant*(tv/100+1)+" "+resa.devise+"</ td ></ tr ></ table >< br />< center >< h3 > MERCI DE VOTRE CONFIANCE !</h3>" +
                          "</center></body>";
 
 
