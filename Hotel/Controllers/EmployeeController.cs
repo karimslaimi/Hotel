@@ -9,6 +9,7 @@ using iTextSharp.tool.xml.pipeline.end;
 using iTextSharp.tool.xml.pipeline.html;
 using Model;
 using Newtonsoft.Json;
+using PagedList;
 using Services;
 using Services.ServiceClient;
 using Services.ServiceReservation;
@@ -37,8 +38,12 @@ namespace Hotel.Controllers
         }
 
 
-        public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? num)
+        public ActionResult Reservations(DateTime? d1, DateTime? d2, string kw, int? page)
         {
+
+            var currentPage = page != null || page == 0 ? (int)page : 1;
+
+
             List<Reservation> _reserv = sr.GetMany().Reverse().ToList();
 
             if (d1 != null && d2 == null)
@@ -59,19 +64,21 @@ namespace Hotel.Controllers
             {
 
             }
-            if (num != null)
-            {
-                _reserv = _reserv.Where(x => x.chambre == num).ToList();
-            }
+
             if (kw != null && kw != "")
             {
                 _reserv = _reserv.Where(x => x.nat.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
                 x.type.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
                 x.bons.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || rech(x.Clients, kw) ||
-                x.agence.Equals(kw, StringComparison.InvariantCultureIgnoreCase) || x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                x.agence.Equals(kw, StringComparison.InvariantCultureIgnoreCase) ||
+                x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
-            return View(_reserv);
+            ViewBag.kw = kw;
+            ViewBag.d1 = d1;
+            ViewBag.d2 = d2;
+            return View(_reserv.ToPagedList(currentPage, 20));
+
         }
 
 

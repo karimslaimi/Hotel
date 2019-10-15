@@ -49,15 +49,6 @@ namespace Hotel.Controllers
 
 
 
-        [CustomAuthorizeAttribute(Roles = "director")]
-        [HttpGet]
-        public ActionResult allDep()
-        {
-            ServiceDepenses sd = new ServiceDepenses();
-            List<Depenses> ld = sd.GetMany().Reverse().ToList();
-           
-            return View(ld.ToPagedList(ld.Count()/3+1, 3));
-        }
 
 
 
@@ -66,8 +57,8 @@ namespace Hotel.Controllers
 
 
         [CustomAuthorizeAttribute(Roles = "director")]
-        [HttpPost]
-        public ActionResult allDep(DateTime? d1, DateTime? d2,int? page)
+
+        public ActionResult allDep(DateTime? d1, DateTime? d2,string kw,int? page)
         {
             var currentPage = page != null || page == 0 ? (int)page : 1;
 
@@ -81,8 +72,15 @@ namespace Hotel.Controllers
             {
                 ld = ld.Where(x => x.datedep <= d2).ToList();
             }
+            if (!string.IsNullOrEmpty(kw))
+            {
+                ld = ld.Where(x => x.description.Contains(kw) || x.motif.Contains(kw)).ToList();
+            }
+            ViewBag.kw = kw;
+            ViewBag.d1 = d1;
+            ViewBag.d2 = d2;
 
-            return View(ld.ToPagedList(currentPage, 3));
+            return View(ld.ToPagedList(currentPage, 20));
         }
 
 

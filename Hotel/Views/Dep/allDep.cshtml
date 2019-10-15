@@ -8,10 +8,16 @@
 @using PagedList
 @using PagedList.Mvc
 
+@using System.Globalization;
+@{
+    CultureInfo french = new CultureInfo("fr-FR");
+}
+
 
 <h2 class="align-center">Dépenses</h2>
 <a href="@Url.Action("addDep","Dep")" class="btn btn-primary pull-right ">Ajouter une dépense</a>
-<br /><br />
+<br />
+<br />
 
 
 
@@ -22,12 +28,12 @@
         <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
     </div>
     <div class="span3 align-center ">
-        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls  span8 ", @id = "ddtpicker" })
+        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls  span8 datepicker " })
 
     </div>
     <div class="span3  ">
         <b> Jusqu'a</b>
-        @Html.TextBox("d2", "", new { @type = "date", @class = "controls   span8 ", @id = "ddtpicker" })
+        @Html.TextBox("d2", "", new { @type = "date", @class = "controls   span8  datepicker" })
     </div>
 
     <div class="span3  ">
@@ -86,7 +92,8 @@
 </table>
 
 
-@Html.PagedListPager(Model,i=>Url.Action("adllDep","Dep",new { page=i }),
+
+@Html.PagedListPager(Model, i=>Url.Action("allDep","Dep",new { page = i, kw = ViewBag.kw, d1 = ViewBag.d1, d2 = ViewBag.d2 }),
 
 new PagedListRenderOptions {
 FunctionToTransformEachPageLink = (liTag, aTag) =>
@@ -99,6 +106,7 @@ LiElementClasses = new[] { "page-item" },
 UlElementClasses = new[] { "pagination justify-content-center" } }
 
 )
+
 
 
 
@@ -173,13 +181,7 @@ UlElementClasses = new[] { "pagination justify-content-center" } }
 
 </script>
 
-<script>
-    $(document).ready(function () {
 
-        $("#ddtpicker").datetimepicker({ dateFormat: 'dd/mm/yy' });
-
-    });
-</script>
 
 <style>
 
@@ -273,6 +275,4 @@ UlElementClasses = new[] { "pagination justify-content-center" } }
         border-top-right-radius: .2rem;
         border-bottom-right-radius: .2rem
     }
-
-
 </style>

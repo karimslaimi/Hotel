@@ -1,12 +1,23 @@
-﻿@model IEnumerable<Hotel.Models.Reservation>
+﻿@model IPagedList<Hotel.Models.Reservation>
 
 @{
     ViewBag.Title = "Reservations";
     Layout = "~/Views/Shared/template.cshtml";
 }
+
+@using PagedList
+@using PagedList.Mvc
+
 @using System.Globalization;
 @{
     CultureInfo french = new CultureInfo("fr-FR"); }
+
+
+
+
+
+
+
 
 <style>
     .sub-entry {
@@ -26,12 +37,12 @@
 <a href="@Url.Action("AddReservation","Reservation")" class="btn btn-primary pull-right ">Nouvelle réservation</a>
 
 <br />
-      <hr />
+<hr />
 @using (Html.BeginForm("Reservations", "Reservation", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {<div class="span3 ">
 
-    <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
-</div>
+        <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
+    </div>
     <div class="span3 align-center ">
         <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls datepicker span8 " })
 
@@ -40,17 +51,17 @@
         <b> Jusqu'a</b>
         @Html.TextBox("d2", "", new { @type = "date", @class = "controls  datepicker span8 " })
     </div>
-    
+
     <div class="span3  ">
 
-        <button type="submit"  class="pull-right btn btn-success">Chercher</button>
+        <button type="submit" class="pull-right btn btn-success">Chercher</button>
     </div>
 }
 <hr />
 <table class="datatable-1 table table-bordered table-striped  display dataTable ">
     <tr>
         <th>
-           Nom Client
+            Nom Client
         </th>
         <th>
             Agence
@@ -76,44 +87,44 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Clients.FirstOrDefault().nomC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.agence)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nat)
-        </td>
-        <td>
-            @{
-                var d = item.Arrivee.ToString("dd/MM/yyyy", french);
-            }
-            @Html.DisplayFor(modelItem => d)
-        </td>
-        <td>
-            @{
-                var d1 = item.dft.ToString("dd/MM/yyyy", french);
-            }
-            @Html.DisplayFor(modelItem => d1)
-        </td>
-        <td>
-           
-            @Html.DisplayFor(modeltItel=>item.montant)
-        </td>
-        @if (item.comfirmed)
-        {
-
-            <td >
-                <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Reservation",new { id = item.id })">Confirmée</a>
-                </td>
-                }
-                else
-                {
-            <td style="color:red">
-                Non confirmée
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clients.FirstOrDefault().nomC)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.agence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nat)
+            </td>
+            <td>
+                @{
+                    var d = item.Arrivee.ToString("dd/MM/yyyy", french);
+                }
+                @Html.DisplayFor(modelItem => d)
+            </td>
+            <td>
+                @{
+                    var d1 = item.dft.ToString("dd/MM/yyyy", french);
+                }
+                @Html.DisplayFor(modelItem => d1)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modeltItel => item.montant)
+            </td>
+            @if (item.comfirmed)
+            {
+
+                <td>
+                    <a class="confirm" style="color:green" href="@Url.Action("Confirmer","Reservation",new { id = item.id })">Confirmée</a>
+                </td>
+            }
+            else
+            {
+                <td style="color:red">
+                    Non confirmée
+                </td>
             }
 
             <td>
@@ -131,6 +142,29 @@
 </table>
 
 
+
+
+
+
+@Html.PagedListPager(Model, i => Url.Action("Reservations", "Reservation", new { page = i, kw = ViewBag.kw, d1 = ViewBag.d1, d2 = ViewBag.d2 }),
+
+new PagedListRenderOptions {
+FunctionToTransformEachPageLink = (liTag, aTag) =>
+{
+aTag.Attributes.Add("class", "page-link");
+liTag.InnerHtml = aTag.ToString();
+return liTag;
+},
+LiElementClasses = new[] { "page-item" },
+UlElementClasses = new[] { "pagination justify-content-center" } }
+)
+
+
+
+
+
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -146,7 +180,7 @@
 
 
                 <div id="content"></div>
-                <center><input type="text" name="tva" id="tva" placeholder="14.00" class="control-label span2"></center> 
+                <center><input type="text" name="tva" id="tva" placeholder="14.00" class="control-label span2"></center>
                 <br />
             </div>
 
@@ -164,7 +198,7 @@
 
 <script>
     $(".confirm").click(function () {
-        
+
         if (confirm("Voulez vous annuler cette réservation ?")) {
             return true;
         }
@@ -175,9 +209,9 @@
 </script>
 <script>
 
-   
+
     $(document).ready(function () {
-       
+
         $(document).on('click', ".open-homeEvents", function () {
             var idres = $(this).data('id');
             console.log(idres);
@@ -204,12 +238,12 @@
                         '</div> </div> <div class="control-group">' +
                         '<label class="control-label "><b>Type chambre:</b> </label><div class="controls">' + data.type + '</div></div>' +
 
-                         '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +  
+                        '<div class="control-group"><label class="control-label "><b>Numéro de réçu </b></label><div class="controls">' + data.bons + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>Montant Total</b></label><div class="controls">' + data.montant + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>Montant Par nuit</b></label><div class="controls">' + data.montantpn + '</div></div>' +
-                        
+
                         '<div class="control-group"><label class="control-label "><b>Methode de paiement</b> </label><div class="controls">' + data.methpaie + '</div></div>' +
 
                         '<div class="control-group"><label class="control-label "><b>devise</b> </label><div class="controls">' + data.devise + '</div></div></div>' +
@@ -235,7 +269,7 @@
 
                         '<div class="control-group"><label class="control-label "><b>Nom Client 3</b></label><div class="controls">' + c3 + '<br /><br /></div></div></div>' +
 
-                        '<center><a class="btn btn-primary" id="facture" onclick="red('+idres+')" >Facture<a/></center><br/>';
+                        '<center><a class="btn btn-primary" id="facture" onclick="red(' + idres + ')" >Facture<a/></center><br/>';
                     $('#content').html(text);
 
                 }
@@ -247,12 +281,12 @@
 
     function red(idres) {
 
-           window.location.href = "/Reservation/Facture/?id= " + idres + "&tva=" + $('#exampleModal #tva').val();
-        
-        }
-       
-        
-   
+        window.location.href = "/Reservation/Facture/?id= " + idres + "&tva=" + $('#exampleModal #tva').val();
+
+    }
+
+
+
 
     function ToJavaScriptDate(value) {
         var pattern = /Date\(([^)]+)\)/;
@@ -266,3 +300,96 @@
 </script>
 
 
+<style>
+
+    .pagination {
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .25rem
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #007bff;
+        background-color: #fff;
+        border: 1px solid #dee2e6
+    }
+
+        .page-link:hover {
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6
+        }
+
+        .page-link:focus {
+            z-index: 2;
+            outline: 0;
+            box-shadow: 0 0 0 .2rem rgba(0,123,255,.25)
+        }
+
+    .page-item:first-child .page-link {
+        margin-left: 0;
+        border-top-left-radius: .25rem;
+        border-bottom-left-radius: .25rem
+    }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem
+    }
+
+    .page-item.active .page-link {
+        z-index: 1;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff
+    }
+
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: auto;
+        background-color: #fff;
+        border-color: #dee2e6
+    }
+
+    .pagination-lg .page-link {
+        padding: .75rem 1.5rem;
+        font-size: 1.25rem;
+        line-height: 1.5
+    }
+
+    .pagination-lg .page-item:first-child .page-link {
+        border-top-left-radius: .3rem;
+        border-bottom-left-radius: .3rem
+    }
+
+    .pagination-lg .page-item:last-child .page-link {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem
+    }
+
+    .pagination-sm .page-link {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5
+    }
+
+    .pagination-sm .page-item:first-child .page-link {
+        border-top-left-radius: .2rem;
+        border-bottom-left-radius: .2rem
+    }
+
+    .pagination-sm .page-item:last-child .page-link {
+        border-top-right-radius: .2rem;
+        border-bottom-right-radius: .2rem
+    }
+</style>

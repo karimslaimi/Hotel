@@ -1,5 +1,6 @@
 ﻿using Hotel.Security;
 using Model;
+using PagedList;
 using Services.ServiceRevenu;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace Hotel.Controllers
         [CustomAuthorizeAttribute(Roles = "director")]
         public ActionResult Index(string kw, DateTime? d1, DateTime? d2)
         {
+
+          
+
+
             List<Revenu> rev = srev.GetMany().Reverse().ToList();
 
             if (d1 != null && d2 == null)
@@ -49,9 +54,9 @@ namespace Hotel.Controllers
         }
         [CustomAuthorizeAttribute(Roles = "director")]
         // GET: Revenu/Details/5
-        public ActionResult Details(string kw, DateTime? d1, DateTime? d2)
+        public ActionResult Details(string kw, DateTime? d1, DateTime? d2,int? page)
         {
-
+            var currentPage = page != null || page == 0 ? (int)page : 1;
             List<Revenu> rev = srev.GetMany().Reverse().ToList();
 
             if (d1 != null && d2 == null)
@@ -73,9 +78,11 @@ namespace Hotel.Controllers
             {
                 rev = rev.Where(x => x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
+            ViewBag.kw = kw;
+            ViewBag.d1 = d1;
+            ViewBag.d2 = d2;
 
-            
-            return View(rev);
+            return View(rev.ToPagedList(currentPage,20));
         }
 
         // GET: Revenu/Create
