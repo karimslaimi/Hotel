@@ -50,13 +50,13 @@
 <table class="datatable-1 table table-bordered table-striped  display dataTable ">
     <tr>
         <th>
-            N° Chambre
+           Nom Client
         </th>
         <th>
             Agence
         </th>
         <th>
-            Type
+            Nationnalité
         </th>
         <th>
             Check-in
@@ -65,7 +65,7 @@
             Check-out
         </th>
 
-        <th>Client</th>
+        <th>Montant</th>
 
         <th>Etat</th>
 
@@ -78,13 +78,13 @@
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.chambre)
+            @Html.DisplayFor(modelItem => item.Clients.FirstOrDefault().nomC)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.agence)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.type)
+            @Html.DisplayFor(modelItem => item.nat)
         </td>
         <td>
             @{
@@ -99,10 +99,8 @@
             @Html.DisplayFor(modelItem => d1)
         </td>
         <td>
-            @{
-                var client = item.Clients.FirstOrDefault();
-            }
-            @Html.DisplayFor(m => client.nomC)
+           
+            @Html.DisplayFor(modeltItel=>item.montant)
         </td>
         @if (item.comfirmed)
         {

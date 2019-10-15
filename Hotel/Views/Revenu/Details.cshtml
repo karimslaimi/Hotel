@@ -50,7 +50,7 @@
         <th>
             @Html.DisplayNameFor(model => model.daterev)
         </th>
-        <th></th>
+      
     </tr>
 
     @foreach (var item in Model)
@@ -69,7 +69,10 @@
                 @Html.DisplayFor(modelItem => item.type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.daterev)
+                @{
+                    var d1 = item.daterev.ToString("dd/MM/yyyy");
+                }
+                @Html.DisplayFor(modelItem => d1)
             </td>
            
         </tr>

@@ -1,8 +1,13 @@
-﻿@model IEnumerable<Hotel.Models.Depenses>
+﻿@model IPagedList<Hotel.Models.Depenses>
 
 @{
     Layout = "~/Views/Shared/template.cshtml";
 }
+
+
+@using PagedList
+@using PagedList.Mvc
+
 
 <h2 class="align-center">Dépenses</h2>
 <a href="@Url.Action("addDep","Dep")" class="btn btn-primary pull-right ">Ajouter une dépense</a>
@@ -12,13 +17,17 @@
 
 @using (Html.BeginForm("allDep", "Dep", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
 {
+    <div class="span3 ">
+
+        <input type="text" name="kw" class="controls span12" placeholder="Chercher...">
+    </div>
     <div class="span3 align-center ">
-        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls datepicker span8 " })
+        <b>De </b>           @Html.TextBox("d1", "", new { @type = "date", @class = "controls  span8 ", @id = "ddtpicker" })
 
     </div>
     <div class="span3  ">
         <b> Jusqu'a</b>
-        @Html.TextBox("d2", "", new { @type = "date", @class = "controls  datepicker span8 " })
+        @Html.TextBox("d2", "", new { @type = "date", @class = "controls   span8 ", @id = "ddtpicker" })
     </div>
 
     <div class="span3  ">
@@ -37,6 +46,12 @@
         <th>
             Montant
         </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Méthode
+        </th>
         <th></th>
     </tr>
 
@@ -51,6 +66,15 @@
                 @Html.DisplayFor(modelItem => item.montant)  dt
             </td>
             <td>
+                @{
+                    var d1 = item.datedep.ToString("dd/MM/yyyy");
+                }
+                @Html.DisplayFor(modelItem => d1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pmethod)
+            </td>
+            <td>
                 <a class="open-homeEvents" href="#" data-toggle="modal" data-target="#exampleModal" data-id="@item.id">
                     <i class="fa fa-history fa-fw"></i>Détailles
                 </a> |
@@ -60,6 +84,23 @@
     }
 
 </table>
+
+
+@Html.PagedListPager(Model,i=>Url.Action("adllDep","Dep",new { page=i }),
+
+new PagedListRenderOptions {
+FunctionToTransformEachPageLink = (liTag, aTag) =>
+{
+aTag.Attributes.Add("class", "page-link");
+liTag.InnerHtml = aTag.ToString();
+return liTag;
+},
+LiElementClasses = new[] { "page-item" },
+UlElementClasses = new[] { "pagination justify-content-center" } }
+
+)
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -86,6 +127,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -123,10 +165,114 @@
         var pattern = /Date\(([^)]+)\)/;
         var results = pattern.exec(value);
         var dt = new Date(parseFloat(results[1]));
-        return (dt.getDate() + "/" +   (dt.getMonth() + 1) +"/" + dt.getFullYear());
+        return (dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear());
     }
 
 
 
 
 </script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#ddtpicker").datetimepicker({ dateFormat: 'dd/mm/yy' });
+
+    });
+</script>
+
+<style>
+
+    .pagination {
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .25rem
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #007bff;
+        background-color: #fff;
+        border: 1px solid #dee2e6
+    }
+
+        .page-link:hover {
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6
+        }
+
+        .page-link:focus {
+            z-index: 2;
+            outline: 0;
+            box-shadow: 0 0 0 .2rem rgba(0,123,255,.25)
+        }
+
+    .page-item:first-child .page-link {
+        margin-left: 0;
+        border-top-left-radius: .25rem;
+        border-bottom-left-radius: .25rem
+    }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem
+    }
+
+    .page-item.active .page-link {
+        z-index: 1;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff
+    }
+
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: auto;
+        background-color: #fff;
+        border-color: #dee2e6
+    }
+
+    .pagination-lg .page-link {
+        padding: .75rem 1.5rem;
+        font-size: 1.25rem;
+        line-height: 1.5
+    }
+
+    .pagination-lg .page-item:first-child .page-link {
+        border-top-left-radius: .3rem;
+        border-bottom-left-radius: .3rem
+    }
+
+    .pagination-lg .page-item:last-child .page-link {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem
+    }
+
+    .pagination-sm .page-link {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5
+    }
+
+    .pagination-sm .page-item:first-child .page-link {
+        border-top-left-radius: .2rem;
+        border-bottom-left-radius: .2rem
+    }
+
+    .pagination-sm .page-item:last-child .page-link {
+        border-top-right-radius: .2rem;
+        border-bottom-right-radius: .2rem
+    }
+
+
+</style>

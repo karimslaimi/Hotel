@@ -1,5 +1,6 @@
 ﻿using Hotel.Models;
 using Hotel.Security;
+using PagedList;
 using Services.ServiceDepence;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,14 @@ namespace Hotel.Controllers
                 return View();
             }
             }
+
+
+
+
+
+
+
+
         [CustomAuthorizeAttribute(Roles = "director")]
         [HttpGet]
         public ActionResult allDep()
@@ -47,12 +56,21 @@ namespace Hotel.Controllers
             ServiceDepenses sd = new ServiceDepenses();
             List<Depenses> ld = sd.GetMany().Reverse().ToList();
            
-            return View(ld);
+            return View(ld.ToPagedList(ld.Count()/3+1, 3));
         }
+
+
+
+
+
+
+
         [CustomAuthorizeAttribute(Roles = "director")]
         [HttpPost]
-        public ActionResult allDep(DateTime? d1, DateTime? d2)
+        public ActionResult allDep(DateTime? d1, DateTime? d2,int? page)
         {
+            var currentPage = page != null || page == 0 ? (int)page : 1;
+
             ServiceDepenses sd = new ServiceDepenses();
             List<Depenses> ld = sd.GetMany().Reverse().ToList();
             if (d1 != null)
@@ -64,8 +82,16 @@ namespace Hotel.Controllers
                 ld = ld.Where(x => x.datedep <= d2).ToList();
             }
 
-            return View(ld);
+            return View(ld.ToPagedList(currentPage, 3));
         }
+
+
+
+
+
+
+
+
         [CustomAuthorizeAttribute(Roles = "director")]
         public PartialViewResult Details(int id)
         {

@@ -13,7 +13,7 @@
         var inst =@ViewData["reserva"];
         console.log(inst);
 
-            
+
     });
 </script>
 
@@ -90,7 +90,7 @@
             <center> Montant</center>
         </th>
         <th>
-            
+
         </th>
 
     </tr>
@@ -104,15 +104,41 @@
             <td>
                 <center>@item.montant </center>
             </td>
-          
+
         </tr>
     }
-    </table>
+</table>
 <br /><br />
 <hr />
 <h3 class="align-center" style="color:#29b7d3">Etat des chambres</h3>
 
-@Html.Action("etatChambres", "Home")
+@{
+
+    var list = ViewBag.listcmbr;
+    var icon = "icon-check-empty";
+}
+@for (int j = 1; j <= 6; j++)
+{<div class="btn-box-row row-fluid">
+        @for (int i = (j * 5) - 4; i <= 5 * j + 1; i++)
+        {
+            if (list.Contains(i))
+            {
+                icon = "icon-check";
+            }
+            else
+            {
+                icon = "icon-check-empty";
+            }
+            <a href="#" class="btn-box small span2">
+                <i class="@icon"></i>
+                <b>Chambre N° @i</b>
+            </a>
+        }
+
+    </div>
+}
+
+
 
 
 <script src="https://code.jquery.com/jquery.min.js"></script>

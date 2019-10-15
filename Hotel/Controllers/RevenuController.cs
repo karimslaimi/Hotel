@@ -34,7 +34,7 @@ namespace Hotel.Controllers
                 rev = rev.Where(x => x.daterev >= d1 && x.daterev<=d2  ).ToList();
             }
            
-            if (kw != null && kw != "")
+            if (kw != null && kw != "" && !string.IsNullOrEmpty(kw))
             {
                 rev = rev.Where(x=>x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
@@ -49,10 +49,33 @@ namespace Hotel.Controllers
         }
         [CustomAuthorizeAttribute(Roles = "director")]
         // GET: Revenu/Details/5
-        public ActionResult Details()
+        public ActionResult Details(string kw, DateTime? d1, DateTime? d2)
         {
-            List<Revenu> reven = srev.GetMany().Reverse().ToList();
-            return View(reven);
+
+            List<Revenu> rev = srev.GetMany().Reverse().ToList();
+
+            if (d1 != null && d2 == null)
+            {
+                rev = rev.Where(x => x.daterev >= d1).ToList();
+            }
+            if (d1 == null && d2 != null)
+            {
+                rev = rev.Where(x => x.daterev <= d2).ToList();
+
+
+            }
+            if (d2 != null & d1 != null)
+            {
+                rev = rev.Where(x => x.daterev >= d1 && x.daterev <= d2).ToList();
+            }
+
+            if (kw != null && kw != "" && !string.IsNullOrEmpty(kw))
+            {
+                rev = rev.Where(x => x.devise.Equals(kw, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+
+            
+            return View(rev);
         }
 
         // GET: Revenu/Create

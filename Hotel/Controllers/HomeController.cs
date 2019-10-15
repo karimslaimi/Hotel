@@ -50,7 +50,41 @@ namespace Hotel.Controllers
             //ViewBag.client = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).Select(l=>l.Clients.Count()).Sum();
             List<Revenu> reserva = srev.GetMany().Reverse().GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
+
            
+          
+
+            if (dt1 == null && dt2 == null)//if both null give him the stats of this week
+            {
+                //DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
+                //DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
+                ViewBag.reservsem = _res.Where(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Count();//nombre reservation
+                ViewBag.money = _dep.Where(x => x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(w => w.montant);//total income
+                ViewBag.client = _res.Where(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Select(l => l.Clients.Count()).Sum();
+
+                ViewBag.credit = _dep.Where(x => x.pmethod == "Credit" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
+                ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
+                ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
+
+
+
+                List<int> lstcmbr = new List<int>();
+
+                List<Reservation> lsr= _res.Where(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).ToList();
+                foreach (Reservation xr in lsr)
+                {
+                    lstcmbr.Add(xr.chambre);
+                }
+                ViewBag.listcmbr = lstcmbr;
+
+
+               
+
+
+              ViewData["reserva"] = srev.GetMany(x => x.daterev.Month == DateTime.Now.Month && x.daterev.Year == DateTime.Now.Year).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
+
+            }
+
             if (dt1!=null && dt2 == null)//if start date not null and end date is null that means from dt1 until now
             {
                 ViewBag.reservsem = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).Count();//nombre reservation
@@ -60,6 +94,21 @@ namespace Hotel.Controllers
                 ViewBag.credit = _dep.Where(x => x.pmethod == "Credit" && x.datedep >= dt1 ).Sum(l => l.montant);
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep >= dt1 ).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep >= dt1 ).Sum(l => l.montant);
+
+
+                List<int> lstcmbr = new List<int>();
+
+                List<Reservation> lsr = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= DateTime.Now).ToList();
+                foreach (Reservation xr in lsr)
+                {
+                    lstcmbr.Add(xr.chambre);
+                }
+                ViewBag.listcmbr = lstcmbr;
+
+
+
+
+                
 
                 ViewData["reserva"] = srev.GetMany(x => x.daterev >= dt1 && x.daterev <= DateTime.Now).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
@@ -79,6 +128,22 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep <= dt2).Sum(l => l.montant);
 
+
+                List<int> lstcmbr = new List<int>();
+
+                List<Reservation> lsr = _res.Where(x => x.Arrivee <= dt2).ToList();
+                foreach (Reservation xr in lsr)
+                {
+                    lstcmbr.Add(xr.chambre);
+                }
+                ViewBag.listcmbr = lstcmbr;
+
+
+
+
+                
+
+
                 ViewData["reserva"] = srev.GetMany(x => x.daterev >= DateTime.Now.AddYears(-10) && x.daterev <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
@@ -97,6 +162,19 @@ namespace Hotel.Controllers
                 ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep >= dt1 && x.datedep <= dt2).Sum(l => l.montant);
                 ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep >= dt1 && x.datedep <= dt2).Sum(l => l.montant);
 
+
+                List<int> lstcmbr = new List<int>();
+
+                List<Reservation> lsr = _res.Where(x => x.Arrivee >= dt1 && x.Arrivee <= dt2).ToList();
+                foreach (Reservation xr in lsr)
+                {
+                    lstcmbr.Add(xr.chambre);
+                }
+                ViewBag.listcmbr = lstcmbr;
+
+
+                
+
                 ViewData["reserva"] = srev.GetMany(x => x.daterev >= dt1 && x.daterev <= dt2).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
 
             }
@@ -105,21 +183,6 @@ namespace Hotel.Controllers
 
 
 
-            if (dt1 == null && dt2 == null)//if both null give him the stats of this week
-            {
-                //DateTime d1 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Sunday);
-                //DateTime d2 = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Saturday);
-                ViewBag.reservsem = _res.Where(x=>x.Arrivee.Month==DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Count();//nombre reservation
-                ViewBag.money = _dep.Where(x=>x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(w => w.montant);//total income
-                ViewBag.client = _res.Where(x => x.Arrivee.Month == DateTime.Now.Month && x.Arrivee.Year == DateTime.Now.Year).Select(l => l.Clients.Count()).Sum();
-
-                ViewBag.credit = _dep.Where(x => x.pmethod == "Credit" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
-                ViewBag.cheque = _dep.Where(x => x.pmethod == "Cheque" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
-                ViewBag.espece = _dep.Where(x => x.pmethod == "Espece" && x.datedep.Month == DateTime.Now.Month && x.datedep.Year == DateTime.Now.Year).Sum(l => l.montant);
-
-                ViewData["reserva"] = srev.GetMany(x => x.daterev.Month == DateTime.Now.Month && x.daterev.Year == DateTime.Now.Year).GroupBy(x => x.devise).Select(s => new Revenu { devise = s.Key, montant = s.Sum(x => x.montant) }).ToList();
-
-            }
 
 
             return View();
@@ -151,13 +214,6 @@ namespace Hotel.Controllers
             IserviceReservation sr = new ServiceReservation();
             List<Reservation> lsr = sr.GetMany(x => x.Arrivee <= DateTime.Today.Date && DateTime.Today.Date <= x.dft).ToList();
         
-                List<int> lstcmbr = new List<int>();
-          
-            foreach (Reservation xr in lsr)
-            {
-                lstcmbr.Add(xr.chambre);
-            }
-            ViewBag.listcmbr = lstcmbr;
             return PartialView();
 
         }
